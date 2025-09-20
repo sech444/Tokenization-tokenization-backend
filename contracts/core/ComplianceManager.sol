@@ -193,6 +193,12 @@ contract ComplianceManager is
         emit TransferLimitSet(user, dailyLimit, monthlyLimit);
     }
 
+    /// @notice Allows admin to update the KYC expiry period (default 365 days)
+    function setKYCExpiryPeriod(uint256 newPeriod) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(newPeriod > 0, "Invalid expiry period");
+        kycExpiryPeriod = newPeriod;
+    }
+
     function isKYCVerified(address user) external view returns (bool) {
         KYCData memory kyc = kycData[user];
         return kyc.isVerified && block.timestamp <= kyc.expiryDate;

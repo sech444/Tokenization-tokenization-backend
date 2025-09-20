@@ -7,6 +7,7 @@ use crate::models::project::ProjectType;
 use crate::utils::auth::Claims;
 use crate::utils::errors::AppResult;
 use crate::AppState;
+use crate::middleware::auth::AuthenticatedUser;
 use rust_decimal::Decimal;
 
 use axum::{
@@ -184,7 +185,7 @@ pub async fn list_projects(
 /// Create new project
 pub async fn create_project(
     State(state): State<AppState>,
-    claims: Claims,
+    AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<CreateProjectRequest>,
 ) -> Result<impl IntoResponse, AppError> {
     // ✅ validation without .as_str()
@@ -218,7 +219,7 @@ pub async fn create_project(
         ));
     }
 
-    let project = db_projects::create_project(&state.db, &payload, claims.user_id).await?;
+    let project = db_projects::create_project(&state.db, &payload, user.id).await?;
     Ok((StatusCode::CREATED, Json(project)))
 }
 
@@ -233,22 +234,4 @@ pub async fn get_project(
 
     Ok(Json(project))
 }
-
-// ---------------------------------------------------------------------------
-// Projects
-// ---------------------------------------------------------------------------
-
-// pub async fn update_project_status(
-//     State(state): State<AppState>,
-//     Extension(current_user): Extension<User>,
-//     Path(project_id): Path<Uuid>,
-//     Json(payload): Json<UpdateProjectStatusRequest>,
-// ) -> AppResult<Json<String>> {
-//     ensure_admin(&current_user)?;
-
-//     queries::update_project_status(&state.db, project_id, payload.status).await?;
-
-//     Ok(Json("Project status updated".to_string()))
-    
-// }
 

@@ -6,9 +6,10 @@ use axum::{
     http::StatusCode,
     response::IntoResponse,
 };
+use crate::middleware::auth::{AuthenticatedUser, RequireAdmin};
 use crate::models::kyc;
 use crate::utils::auth::hash_password;
-// use crate::utils::auth::verify_password;
+use sqlx::PgPool;
 
 use bcrypt::{hash, verify, DEFAULT_COST};
 use chrono::{DateTime, Utc, Duration};
@@ -67,7 +68,7 @@ pub struct AuthResponse {
     pub expires_at: DateTime<Utc>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize)]// /// Change password
 pub struct UserListResponse {
     pub users: Vec<UserSummary>,
     pub total_count: u32,
@@ -89,16 +90,6 @@ pub struct ChangePasswordRequest {
     pub new_password: String,
 }
 
-// JWT Claims structure
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct Claims {
-//     pub sub: String, // Subject (user ID)
-//     pub exp: usize,  // Expiration time
-//     pub iat: usize,  // Issued at
-//     pub user_id: Uuid,
-//     pub email: String,
-//     pub role: UserRole,
-// }
 
 // ===============================
 // Password and JWT Utilities
@@ -405,144 +396,8 @@ pub async fn verify_token(
     })))
 }
 
-// /// Change password
-// pub async fn change_password(
-//     State(state): State<AppState>,
-//     Extension(current_user): Extension<User>,
-//     Json(payload): Json<ChangePasswordRequest>,
-// ) -> AppResult<Json<serde_json::Value>> {
-//     // Validate new password
-//     validate_password(&payload.new_password)
-//         .map_err(|e| AppError::validation(e))?;
 
-//     // Verify current password
-//     if !verify_password(&payload.current_password, &current_user.password_hash)? {
-//         return Err(AppError::validation("Current password is incorrect"));
-//     }
 
-//     // Hash new password
-//     let new_password_hash = hash_password(&payload.new_password)?;
-
-//     // Update password in database
-//     users::update_user_password(&state.db, current_user.id, &new_password_hash).await?;
-
-//     info!("Password changed for user {}", current_user.id);
-
-//     Ok(Json(serde_json::json!({
-//         "success": true,
-//         "message": "Password changed successfully"
-//     })))
-// }
-
-// /// Logout user
-// pub async fn logout(
-//     Extension(current_user): Extension<User>,
-// ) -> AppResult<Json<serde_json::Value>> {
-//     info!("User {} logged out", current_user.id);
-    
-//     // Note: JWT tokens are stateless, so we can't truly invalidate them on the server
-//     // without maintaining a blacklist. For now, we rely on client-side token removal.
-    
-//     Ok(Json(serde_json::json!({
-//         "success": true,
-//         "message": "Logged out successfully"
-//     })))
-// }
-
-// // ===============================
-// // Admin Handlers
-// // ===============================
-
-// /// List all users (admin only)
-// pub async fn list_users(
-//     State(state): State<AppState>,
-//     Extension(current_user): Extension<User>,
-//     Query(query_params): Query<UserListQuery>,
-// ) -> AppResult<Json<UserListResponse>> {
-//     // Check admin permissions
-//     if !matches!(current_user.role, UserRole::Admin) {
-//         warn!("Non-admin user {} attempted to access user list", current_user.id);
-//         return Err(AppError::Forbidden("Admin access required".into()));
-//     }
-
-//     let page = query_params.page.unwrap_or(1).max(1);
-//     let limit = query_params.limit.unwrap_or(20).min(100);
-    
-//     let (users, total_count) = queries::list_users(&state.db, &query_params, page, limit).await?;
-//     let total_pages = ((total_count as f64) / (limit as f64)).ceil() as u32;
-
-//     info!("Admin {} retrieved {} users (page {}/{})", 
-//           current_user.id, users.len(), page, total_pages);
-
-//     Ok(Json(UserListResponse {
-//         users,
-//         total_count: total_count as u32,
-//         page,
-//         limit,
-//         total_pages,
-//     }))
-// }
-
-// /// Get pending KYC requests (admin only)
-// pub async fn pending_kyc(
-//     State(state): State<AppState>,
-//     Extension(current_user): Extension<User>,
-// ) -> AppResult<Json<serde_json::Value>> {
-//     if !matches!(current_user.role, UserRole::Admin) {
-//         return Err(AppError::Forbidden("Admin access required".into()));
-//     }
-
-//     // Get pending KYC requests from database
-//     let pending_requests = queries::get_pending_kyc(&state.db).await?;
-//     let count = pending_requests.len();
-
-//     info!("Admin {} retrieved {} pending KYC requests", current_user.id, count);
-
-//     Ok(Json(serde_json::json!({
-//         "pending_kyc": pending_requests,
-//         "count": count
-//     })))
-// }
-
-// /// Approve or reject KYC request (admin only)
-// pub async fn approve_kyc(
-//     State(state): State<AppState>,
-//     Extension(current_user): Extension<User>,
-//     Json(payload): Json<ApproveKycRequest>,
-// ) -> AppResult<Json<serde_json::Value>> {
-//     if !matches!(current_user.role, UserRole::Admin) {
-//         return Err(AppError::Forbidden("Admin access required".into()));
-//     }
-
-//     // Verify user exists
-//     let user: User = users::get_user_by_id(&state.db, &payload.user_id).await?
-//         .ok_or_else(|| AppError::validation("User not found"))?;
-
-//     // Update KYC status in database
-//     queries::update_kyc_status(&state.db, kyc::UpdateKycParams {
-//         user_id: payload.user_id,
-//         approved: payload.approved,
-//         notes: payload.notes.clone(),
-//         approved_by: current_user.id,
-//     }).await?;
-
-//     let action = if payload.approved { "approved" } else { "rejected" };
-//     info!("KYC {} for user {} by admin {}", action, payload.user_id, current_user.id);
-
-//     Ok(Json(serde_json::json!({
-//         "success": true,
-//         "message": format!("KYC {} for user {}", action, payload.user_id),
-//         "user_id": payload.user_id,
-//         "approved": payload.approved,
-//         "notes": payload.notes,
-//         "approved_by": current_user.id,
-//         "approved_at": Utc::now().to_rfc3339()
-//     })))
-// }
-
-// Update these handler functions in your handlers/auth.rs
-
-use crate::middleware::auth::{AuthenticatedUser, RequireAdmin};
 
 /// Change password
 pub async fn change_password(
@@ -588,20 +443,18 @@ pub async fn logout(
     })))
 }
 
-/// List all users (admin only)
+
+
 pub async fn list_users(
     State(state): State<AppState>,
-    RequireAdmin(current_user): RequireAdmin,
-    Query(query_params): Query<UserListQuery>,
-) -> AppResult<Json<UserListResponse>> {
-    let page = query_params.page.unwrap_or(1).max(1);
-    let limit = query_params.limit.unwrap_or(20).min(100);
-    
-    let (users, total_count) = queries::list_users(&state.db, &query_params, page, limit).await?;
-    let total_pages = ((total_count as f64) / (limit as f64)).ceil() as u32;
+    RequireAdmin(_admin): RequireAdmin,
+    Query(query): Query<UserListQuery>,
+) -> Result<Json<UserListResponse>, AppError> {
+    let page = query.page.unwrap_or(1).max(1);
+    let limit = query.limit.unwrap_or(20).min(100);
 
-    info!("Admin {} retrieved {} users (page {}/{})", 
-          current_user.id, users.len(), page, total_pages);
+    let (users, total_count) = queries::fetch_users(&state.db, &query, page, limit).await?;
+    let total_pages = ((total_count as f64) / (limit as f64)).ceil() as u32;
 
     Ok(Json(UserListResponse {
         users,
@@ -611,6 +464,7 @@ pub async fn list_users(
         total_pages,
     }))
 }
+
 
 /// Get pending KYC requests (admin only)
 pub async fn pending_kyc(
@@ -629,34 +483,3 @@ pub async fn pending_kyc(
     })))
 }
 
-/// Approve or reject KYC request (admin only)
-pub async fn approve_kyc(
-    State(state): State<AppState>,
-    RequireAdmin(current_user): RequireAdmin,
-    Json(payload): Json<ApproveKycRequest>,
-) -> AppResult<Json<serde_json::Value>> {
-    // Verify user exists
-    let user: User = users::get_user_by_id(&state.db, &payload.user_id).await?
-        .ok_or_else(|| AppError::validation("User not found"))?;
-
-    // Update KYC status in database
-    queries::update_kyc_status(&state.db, kyc::UpdateKycParams {
-        user_id: payload.user_id,
-        approved: payload.approved,
-        notes: payload.notes.clone(),
-        approved_by: current_user.id,
-    }).await?;
-
-    let action = if payload.approved { "approved" } else { "rejected" };
-    info!("KYC {} for user {} by admin {}", action, payload.user_id, current_user.id);
-
-    Ok(Json(serde_json::json!({
-        "success": true,
-        "message": format!("KYC {} for user {}", action, payload.user_id),
-        "user_id": payload.user_id,
-        "approved": payload.approved,
-        "notes": payload.notes,
-        "approved_by": current_user.id,
-        "approved_at": Utc::now().to_rfc3339()
-    })))
-}

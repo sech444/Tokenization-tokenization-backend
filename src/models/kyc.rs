@@ -620,3 +620,12 @@ pub struct UpdateKycParams {
     pub notes: Option<String>,
     pub approved_by: Uuid,
 }
+
+#[derive(Debug, Clone, Serialize, sqlx::FromRow)]
+pub struct KycListItem {
+    pub id: Uuid,
+    pub user_id: Uuid,
+    pub verification_status: Option<String>,  // <- text-safe
+    pub risk_level: Option<String>,           // <- text-safe
+    pub created_at: DateTime<Utc>,
+}

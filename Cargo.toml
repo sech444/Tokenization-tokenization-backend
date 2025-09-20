@@ -65,4 +65,8 @@ lettre = "0.11.18"
 sha3 = "0.10"
 rand = "0.8"
 k256 = "0.13.4"
+eyre = "0.6.12"
 
+[lib]
+name = "tokenization_platform"
+path = "src/lib.rs"

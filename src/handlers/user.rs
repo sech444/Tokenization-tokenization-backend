@@ -8,6 +8,7 @@ use axum::{
     http::StatusCode,
     response::IntoResponse,
 };
+use crate::models::user::UpdateUserRequest;
 use bcrypt::{hash, verify, DEFAULT_COST};
 use chrono::{DateTime, Utc, Duration};
 use jsonwebtoken::{encode, decode, Header, Algorithm, Validation, EncodingKey, DecodingKey};
@@ -17,7 +18,11 @@ use tracing::{info, warn};
 use crate::{
     database::{queries, users}, handlers::{admin::{UserListQuery, UserSummary}}, models::{user::{User, UserRole, UserStatus}, UserResponse}, utils::errors::{AppError, AppResult}, AppState
 };
-use crate::models::kyc::UpdateKycParams;
+
+// use crate::{
+//     models::user::{ UpdateUserRequest},
+   
+// };
 
 use crate::utils::auth::{Claims, hash_password, verify_password}; 
 
@@ -221,98 +226,6 @@ pub async fn verify_token(
 
 
 
-/// List all users (admin only)
-pub async fn list_users(
-    State(state): State<AppState>,
-    Extension(current_user): Extension<User>,
-    Query(query_params): Query<UserListQuery>,
-) -> AppResult<Json<UserListResponse>> {
-    // Check admin permissions
-    if !matches!(current_user.role, UserRole::Admin) {
-        warn!("Non-admin user {} attempted to access user list", current_user.id);
-        return Err(AppError::Forbidden("Admin access required".into()));
-    }
-
-    let page = query_params.page.unwrap_or(1).max(1);
-    let limit = query_params.limit.unwrap_or(20).min(100);
-    
-    let (users, total_count) = queries::list_users(&state.db, &query_params, page, limit).await?;
-    let total_pages = ((total_count as f64) / (limit as f64)).ceil() as u32;
-
-    info!("Admin {} retrieved {} users (page {}/{})", 
-          current_user.id, users.len(), page, total_pages);
-
-    Ok(Json(UserListResponse {
-        users,
-        total_count: total_count as u32,
-        page,
-        limit,
-        total_pages,
-    }))
-}
-
-/// Get pending KYC requests (admin only)
-pub async fn pending_kyc(
-    State(state): State<AppState>,
-    Extension(current_user): Extension<User>,
-) -> AppResult<Json<serde_json::Value>> {
-    if !matches!(current_user.role, UserRole::Admin) {
-        return Err(AppError::Forbidden("Admin access required".into()));
-    }
-
-    // Get pending KYC requests from database
-    let pending_requests = queries::get_pending_kyc(&state.db).await?;
-    let count = pending_requests.len();
-
-    info!("Admin {} retrieved {} pending KYC requests", current_user.id, count);
-
-    Ok(Json(serde_json::json!({
-        "pending_kyc": pending_requests,
-        "count": count
-    })))
-}
-
-/// Approve or reject KYC request (admin only)
-pub async fn approve_kyc(
-    State(state): State<AppState>,
-    Extension(current_user): Extension<User>,
-    Json(payload): Json<ApproveKycRequest>,
-) -> AppResult<Json<serde_json::Value>> {
-    if !matches!(current_user.role, UserRole::Admin) {
-        return Err(AppError::Forbidden("Admin access required".into()));
-    }
-
-    // Verify user exists
-    let user = users::get_user_by_id(&state.db, &payload.user_id).await?
-        .ok_or_else(|| AppError::validation("User not found"))?;
-
-    // Update KYC status in database
-    queries::update_kyc_status(&state.db, UpdateKycParams {
-        user_id: payload.user_id,
-        approved: payload.approved,
-        notes: payload.notes.clone(),
-        approved_by: current_user.id,
-    }).await?;
-
-    let action = if payload.approved { "approved" } else { "rejected" };
-    info!("KYC {} for user {} by admin {}", action, payload.user_id, current_user.id);
-
-    Ok(Json(serde_json::json!({
-        "success": true,
-        "message": format!("KYC {} for user {}", action, payload.user_id),
-        "user_id": payload.user_id,
-        "approved": payload.approved,
-        "notes": payload.notes,
-        "approved_by": current_user.id,
-        "approved_at": Utc::now().to_rfc3339()
-    })))
-}
-
-
-use crate::{
-    models::user::{ UpdateUserRequest},
-   
-};
 
 /// Get user profile by ID
 pub async fn get_user_profile(

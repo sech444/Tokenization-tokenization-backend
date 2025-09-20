@@ -8,6 +8,7 @@ use sqlx::FromRow;
 use uuid::Uuid;
 use validator::Validate;
 use std::str::FromStr;
+use rust_decimal::Decimal;
 
 
 /// Project stored in DB
@@ -26,7 +27,7 @@ pub struct Project {
     pub maximum_investment: Option<i64>,
     pub funds_raised: i64,
     pub investor_count: i32,
-    pub expected_return: Option<f64>,
+    pub expected_return: Option<Decimal>,
     pub investment_period_months: i32,
     pub property_details: serde_json::Value,
     pub legal_documents: Option<Vec<String>>,
@@ -55,7 +56,7 @@ pub struct ProjectResponse {
     pub maximum_investment: Option<i64>,
     pub funds_raised: i64,
     pub investor_count: i32,
-    pub expected_return: Option<f64>,
+    pub expected_return: Option<Decimal>,
     pub investment_period_months: i32,
     pub property_details: serde_json::Value,
     pub legal_documents: Option<Vec<String>>,
@@ -117,7 +118,7 @@ pub struct CreateProjectRequest {
     pub minimum_investment: i64,
 
     pub maximum_investment: Option<i64>,
-    pub expected_return: Option<f64>,
+    pub expected_return: Option<Decimal>,
     pub investment_period_months: i32,
     pub location: Option<String>,
     pub property_address: Option<String>,
@@ -137,7 +138,7 @@ pub struct UpdateProjectRequest {
     pub total_value: Option<i64>,
     pub minimum_investment: Option<i64>,
     pub maximum_investment: Option<i64>,
-    pub expected_return: Option<f64>,
+    pub expected_return: Option<Decimal>,
     pub investment_period_months: Option<i32>,
     pub location: Option<String>,
     pub property_address: Option<String>,

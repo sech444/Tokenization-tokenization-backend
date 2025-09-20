@@ -601,3 +601,911 @@
 [0;31m[ERROR][0m 2025-09-12 05:36:11 - Contract compilation failed
 [0;31m[ERROR][0m 2025-09-12 05:36:11 - Deployment failed with exit code 1
 [0;34m[INFO][0m 2025-09-12 05:36:11 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 06:24:06 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 06:24:06 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 06:24:06 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 06:24:06 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 06:24:06 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 06:24:13 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 06:24:13 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 06:24:13 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 06:24:13 - Compiling smart contracts...
+[0;32m[SUCCESS][0m 2025-09-12 06:27:43 - Contracts compiled successfully
+[0;34m[INFO][0m 2025-09-12 06:27:43 - Running contract tests...
+[0;32m[SUCCESS][0m 2025-09-12 06:27:44 - All tests passed
+[0;34m[INFO][0m 2025-09-12 06:27:44 - Running security checks...
+[1;33m[WARNING][0m 2025-09-12 06:27:44 - Slither not found - consider installing for security analysis
+[0;34m[INFO][0m 2025-09-12 06:27:44 - Checking contract sizes...
+[0;31m[ERROR][0m 2025-09-12 06:27:44 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 06:27:44 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 06:41:56 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 06:41:56 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 06:41:56 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 06:41:56 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 06:41:56 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 06:42:07 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 06:42:07 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 06:42:07 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 06:42:07 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 06:42:08 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 06:42:08 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 06:42:08 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 06:47:31 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 06:47:31 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 06:47:31 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 06:47:31 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 06:47:31 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 06:47:37 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 06:47:37 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 06:47:37 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 06:47:37 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 06:47:38 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 06:47:38 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 06:47:38 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 06:53:07 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 06:53:07 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 06:53:07 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 06:53:07 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 06:53:07 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 06:53:08 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 06:53:08 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 06:53:08 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 06:53:08 - Compiling smart contracts...
+[0;32m[SUCCESS][0m 2025-09-12 06:56:01 - Contracts compiled successfully
+[0;34m[INFO][0m 2025-09-12 06:56:01 - Running contract tests...
+[0;32m[SUCCESS][0m 2025-09-12 06:56:01 - All tests passed
+[0;34m[INFO][0m 2025-09-12 06:56:01 - Running security checks...
+[1;33m[WARNING][0m 2025-09-12 06:56:01 - Slither not found - consider installing for security analysis
+[0;34m[INFO][0m 2025-09-12 06:56:01 - Checking contract sizes...
+[0;31m[ERROR][0m 2025-09-12 06:56:01 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 06:56:01 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 07:06:40 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 07:06:40 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 07:06:40 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 07:06:40 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 07:06:40 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 07:06:46 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 07:06:46 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 07:06:46 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 07:06:46 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 07:06:47 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 07:06:47 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 07:06:47 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 07:19:51 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 07:19:51 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 07:19:51 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 07:19:51 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 07:19:51 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 07:19:57 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 07:19:57 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 07:19:57 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 07:19:57 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 07:19:57 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 07:19:57 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 07:19:57 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 07:24:09 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 07:24:09 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 07:24:09 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 07:24:09 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 07:24:09 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 07:24:10 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 07:24:10 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 07:24:10 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 07:24:10 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 07:24:10 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 07:24:10 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 07:24:10 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 07:28:22 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 07:28:22 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 07:28:22 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 07:28:22 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 07:28:22 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 07:28:28 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 07:28:28 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 07:28:28 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 07:28:28 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 07:28:29 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 07:28:29 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 07:28:29 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 07:35:25 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 07:35:25 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 07:35:25 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 07:35:25 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 07:35:25 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 07:35:31 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 07:35:31 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 07:35:31 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 07:35:31 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 07:35:32 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 07:35:32 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 07:35:32 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 07:38:58 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 07:38:58 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 07:38:58 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 07:38:58 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 07:38:58 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 07:38:59 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 07:38:59 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 07:38:59 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 07:38:59 - Compiling smart contracts...
+[0;32m[SUCCESS][0m 2025-09-12 07:40:06 - Contracts compiled successfully
+[0;34m[INFO][0m 2025-09-12 07:40:06 - Running contract tests...
+[0;32m[SUCCESS][0m 2025-09-12 07:40:06 - All tests passed
+[0;34m[INFO][0m 2025-09-12 07:40:06 - Running security checks...
+[1;33m[WARNING][0m 2025-09-12 07:40:06 - Slither not found - consider installing for security analysis
+[0;34m[INFO][0m 2025-09-12 07:40:06 - Checking contract sizes...
+[0;31m[ERROR][0m 2025-09-12 07:40:07 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 07:40:07 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 07:57:14 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 07:57:14 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 07:57:14 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 07:57:14 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 07:57:14 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 07:57:20 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 07:57:20 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 07:57:20 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 07:57:20 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 07:57:20 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 07:57:20 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 07:57:20 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 08:00:22 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 08:00:22 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 08:00:22 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 08:00:22 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 08:00:22 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 08:00:22 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 08:00:22 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 08:00:22 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 08:00:22 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 08:00:23 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 08:00:23 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 08:00:23 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 08:06:03 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 08:06:03 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 08:06:03 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 08:06:03 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 08:06:03 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 08:06:09 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 08:06:09 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 08:06:09 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 08:06:09 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 08:06:11 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 08:06:11 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 08:06:11 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 08:07:01 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 08:07:01 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 08:07:01 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 08:07:01 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 08:07:01 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 08:07:01 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 08:07:01 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 08:07:01 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 08:07:01 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 08:07:03 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 08:07:03 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 08:07:03 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 08:15:13 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 08:15:13 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 08:15:13 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 08:15:13 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 08:15:13 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 08:15:19 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 08:15:19 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 08:15:19 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 08:15:19 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 08:15:20 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 08:15:20 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 08:15:20 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 08:18:17 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 08:18:18 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 08:18:18 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 08:18:18 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 08:18:18 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 08:18:18 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 08:18:18 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 08:18:18 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 08:18:18 - Compiling smart contracts...
+[0;31m[ERROR][0m 2025-09-12 08:18:19 - Contract compilation failed
+[0;31m[ERROR][0m 2025-09-12 08:18:19 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 08:18:19 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details
+[0;34m[INFO][0m 2025-09-12 08:20:09 - Starting Tokenization Platform deployment
+[0;34m[INFO][0m 2025-09-12 08:20:09 - Network: polygon-mumbai
+[0;34m[INFO][0m 2025-09-12 08:20:09 - Verify contracts: true
+[0;34m[INFO][0m 2025-09-12 08:20:09 - Dry run: false
+[0;34m[INFO][0m 2025-09-12 08:20:09 - Checking deployment prerequisites...
+[0;34m[INFO][0m 2025-09-12 08:20:09 - Deployer balance: 0.000000000000000000 ETH
+[1;33m[WARNING][0m 2025-09-12 08:20:09 - Low deployer balance. Consider adding more ETH for gas fees.
+[0;32m[SUCCESS][0m 2025-09-12 08:20:09 - All prerequisites met
+[0;34m[INFO][0m 2025-09-12 08:20:09 - Compiling smart contracts...
+[0;32m[SUCCESS][0m 2025-09-12 08:21:08 - Contracts compiled successfully
+[0;34m[INFO][0m 2025-09-12 08:21:08 - Running contract tests...
+[0;32m[SUCCESS][0m 2025-09-12 08:21:09 - All tests passed
+[0;34m[INFO][0m 2025-09-12 08:21:09 - Running security checks...
+[1;33m[WARNING][0m 2025-09-12 08:21:09 - Slither not found - consider installing for security analysis
+[0;34m[INFO][0m 2025-09-12 08:21:09 - Checking contract sizes...
+[0;34m[INFO][0m 2025-09-12 08:21:09 - Starting contract deployment sequence...
+[0;34m[INFO][0m 2025-09-12 08:21:09 - === Deploying Core Infrastructure ===
+[0;34m[INFO][0m 2025-09-12 08:21:09 - Deploying AuditTrail...
+[0;32m[SUCCESS][0m 2025-09-12 08:21:26 - AuditTrail deployed at: 
+[0;34m[INFO][0m 2025-09-12 08:21:26 - Deploying AdminGovernance...
+[0;32m[SUCCESS][0m 2025-09-12 08:21:28 - AdminGovernance deployed at: 
+[0;34m[INFO][0m 2025-09-12 08:21:28 - Deploying FeeManager...
+[0;32m[SUCCESS][0m 2025-09-12 08:21:29 - FeeManager deployed at: 
+[0;34m[INFO][0m 2025-09-12 08:21:29 - === Deploying Compliance and Token Management ===
+[0;34m[INFO][0m 2025-09-12 08:21:29 - Deploying ComplianceManager...
+[0;32m[SUCCESS][0m 2025-09-12 08:21:30 - ComplianceManager deployed at: 
+[0;34m[INFO][0m 2025-09-12 08:21:30 - Deploying TokenFactory...
+[0;31m[ERROR][0m 2025-09-12 08:21:32 - Failed to deploy TokenFactory: [2m2025-09-12T07:21:30.880268Z[0m [34mDEBUG[0m [1mfind_svm_installed_version[0m[2m:[0m[1mSolc::new[0m[2m:[0m[1mget_version[0m[1m{[0m[3mpath[0m[2m=[0msolc-0.8.22[1m}[0m[2m:[0m [2mfoundry_compilers::compilers::solc::compiler[0m[2m:[0m getting Solc version [3mcmd[0m[2m=[0m"/home/sechmos/.local/share/svm/0.8.22/solc-0.8.22" "--version"
+[2m2025-09-12T07:21:30.883399Z[0m [34mDEBUG[0m [1mfind_svm_installed_version[0m[2m:[0m[1mSolc::new[0m[2m:[0m[1mget_version[0m[1m{[0m[3mpath[0m[2m=[0msolc-0.8.22[1m}[0m[2m:[0m [2mfoundry_compilers::compilers::solc::compiler[0m[2m:[0m [3mversion[0m[2m=[0m0.8.22+commit.4fc1097e.Linux.gcc
+[2m2025-09-12T07:21:30.883963Z[0m [34mDEBUG[0m [1mcompile_with[0m[2m:[0m [2mfoundry_common::compile[0m[2m:[0m compiling project
+[2m2025-09-12T07:21:30.955889Z[0m [34mDEBUG[0m [1mcompile_with[0m[2m:[0m [2mfoundry_common::compile[0m[2m:[0m finished compiling in 0.072s
+No files changed, compilation skipped
+[2m2025-09-12T07:21:30.956322Z[0m [34mDEBUG[0m [2mfoundry_config[0m[2m:[0m failed to load mesc config [3merr[0m[2m=[0mMesc is not enabled
+[2m2025-09-12T07:21:30.956385Z[0m [34mDEBUG[0m [2malloy_rpc_client::call[0m[2m:[0m sending request [3mmethod[0m[2m=[0meth_chainId [3mid[0m[2m=[0m0
+[2m2025-09-12T07:21:30.963054Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mreqwest::connect[0m[2m:[0m starting new connection: https://polygon-mainnet.g.alchemy.com/
+[2m2025-09-12T07:21:30.967309Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mhyper_util::client::legacy::connect::http[0m[2m:[0m connecting to 104.19.178.115:443
+[2m2025-09-12T07:21:31.160543Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mhyper_util::client::legacy::connect::http[0m[2m:[0m connected to 104.19.178.115:443
+[2m2025-09-12T07:21:31.160587Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mrustls::client::hs[0m[2m:[0m No cached session for DnsName("polygon-mainnet.g.alchemy.com")
+[2m2025-09-12T07:21:31.160602Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mrustls::client::hs[0m[2m:[0m Not resuming any session
+[2m2025-09-12T07:21:31.413716Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mrustls::client::hs[0m[2m:[0m Using ciphersuite TLS13_AES_256_GCM_SHA384
+[2m2025-09-12T07:21:31.413772Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mrustls::client::tls13[0m[2m:[0m Not resuming
+[2m2025-09-12T07:21:31.413961Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mrustls::client::tls13[0m[2m:[0m TLS1.3 encrypted extensions: ServerExtensions { server_name_ack: (), selected_protocol: SingleProtocolName(ProtocolName(6832)), unknown_extensions: {}, .. }
+[2m2025-09-12T07:21:31.413988Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mrustls::client::hs[0m[2m:[0m ALPN protocol is Some(b"h2")
+[2m2025-09-12T07:21:31.415976Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mh2::client[0m[2m:[0m binding client connection
+[2m2025-09-12T07:21:31.415988Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mh2::client[0m[2m:[0m client connection bound
+[2m2025-09-12T07:21:31.415994Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mh2::codec::framed_write[0m[2m:[0m send [3mframe[0m[2m=[0mSettings { flags: (0x0), enable_push: 0, initial_window_size: 2097152, max_frame_size: 16384, max_header_list_size: 16384 }
+[2m2025-09-12T07:21:31.416051Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mhyper_util::client::legacy::pool[0m[2m:[0m pooling idle connection for ("https", polygon-mainnet.g.alchemy.com)
+[2m2025-09-12T07:21:31.416089Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_write[0m[2m:[0m send [3mframe[0m[2m=[0mWindowUpdate { stream_id: StreamId(0), size_increment: 5177345 }
+[2m2025-09-12T07:21:31.416835Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_write[0m[2m:[0m send [3mframe[0m[2m=[0mHeaders { stream_id: StreamId(1), flags: (0x4: END_HEADERS) }
+[2m2025-09-12T07:21:31.416877Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_write[0m[2m:[0m send [3mframe[0m[2m=[0mData { stream_id: StreamId(1), flags: (0x1: END_STREAM) }
+[2m2025-09-12T07:21:31.720670Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mSettings { flags: (0x0), max_concurrent_streams: 100, initial_window_size: 65536, max_frame_size: 16777215 }
+[2m2025-09-12T07:21:31.720807Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_write[0m[2m:[0m send [3mframe[0m[2m=[0mSettings { flags: (0x1: ACK) }
+[2m2025-09-12T07:21:31.720828Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mWindowUpdate { stream_id: StreamId(0), size_increment: 2147418112 }
+[2m2025-09-12T07:21:31.720909Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mSettings { flags: (0x1: ACK) }
+[2m2025-09-12T07:21:31.721001Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::proto::settings[0m[2m:[0m received settings ACK; applying Settings { flags: (0x0), enable_push: 0, initial_window_size: 2097152, max_frame_size: 16384, max_header_list_size: 16384 }
+[2m2025-09-12T07:21:31.721083Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mHeaders { stream_id: StreamId(1), flags: (0x4: END_HEADERS) }
+[2m2025-09-12T07:21:31.721117Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mData { stream_id: StreamId(1) }
+[2m2025-09-12T07:21:31.721140Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mData { stream_id: StreamId(1), flags: (0x1: END_STREAM) }
+[2m2025-09-12T07:21:31.721263Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2malloy_transport_http::reqwest_transport[0m[2m:[0m received response from server [3mstatus[0m[2m=[0m200 OK
+[2m2025-09-12T07:21:31.721354Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2malloy_transport_http::reqwest_transport[0m[2m:[0m retrieved response body. Use `trace` for full body [3mbytes[0m[2m=[0m40
+[2m2025-09-12T07:21:31.721736Z[0m [34mDEBUG[0m [2malloy_rpc_client::call[0m[2m:[0m sending request [3mmethod[0m[2m=[0meth_getTransactionCount [3mid[0m[2m=[0m1
+[2m2025-09-12T07:21:31.721852Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mhyper_util::client::legacy::pool[0m[2m:[0m reuse idle connection for ("https", polygon-mainnet.g.alchemy.com)
+[2m2025-09-12T07:21:31.721927Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_write[0m[2m:[0m send [3mframe[0m[2m=[0mHeaders { stream_id: StreamId(3), flags: (0x4: END_HEADERS) }
+[2m2025-09-12T07:21:31.721957Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_write[0m[2m:[0m send [3mframe[0m[2m=[0mData { stream_id: StreamId(3), flags: (0x1: END_STREAM) }
+[2m2025-09-12T07:21:32.027590Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mHeaders { stream_id: StreamId(3), flags: (0x4: END_HEADERS) }
+[2m2025-09-12T07:21:32.027625Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mData { stream_id: StreamId(3) }
+[2m2025-09-12T07:21:32.027639Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mData { stream_id: StreamId(3), flags: (0x1: END_STREAM) }
+[2m2025-09-12T07:21:32.027704Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2malloy_transport_http::reqwest_transport[0m[2m:[0m received response from server [3mstatus[0m[2m=[0m200 OK
+[2m2025-09-12T07:21:32.027791Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2malloy_transport_http::reqwest_transport[0m[2m:[0m retrieved response body. Use `trace` for full body [3mbytes[0m[2m=[0m42
+[2m2025-09-12T07:21:32.027862Z[0m [34mDEBUG[0m [2malloy_rpc_client::call[0m[2m:[0m sending request [3mmethod[0m[2m=[0meth_feeHistory [3mid[0m[2m=[0m2
+[2m2025-09-12T07:21:32.027926Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2mhyper_util::client::legacy::pool[0m[2m:[0m reuse idle connection for ("https", polygon-mainnet.g.alchemy.com)
+[2m2025-09-12T07:21:32.027990Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_write[0m[2m:[0m send [3mframe[0m[2m=[0mHeaders { stream_id: StreamId(5), flags: (0x4: END_HEADERS) }
+[2m2025-09-12T07:21:32.028019Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_write[0m[2m:[0m send [3mframe[0m[2m=[0mData { stream_id: StreamId(5), flags: (0x1: END_STREAM) }
+[2m2025-09-12T07:21:32.242863Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mHeaders { stream_id: StreamId(5), flags: (0x4: END_HEADERS) }
+[2m2025-09-12T07:21:32.242965Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2malloy_transport_http::reqwest_transport[0m[2m:[0m received response from server [3mstatus[0m[2m=[0m200 OK
+[2m2025-09-12T07:21:32.242969Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mData { stream_id: StreamId(5) }
+[2m2025-09-12T07:21:32.242988Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_read[0m[2m:[0m received [3mframe[0m[2m=[0mData { stream_id: StreamId(5), flags: (0x1: END_STREAM) }
+[2m2025-09-12T07:21:32.243047Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m [2malloy_transport_http::reqwest_transport[0m[2m:[0m retrieved response body. Use `trace` for full body [3mbytes[0m[2m=[0m657
+Warning: Dry run enabled, not broadcasting transaction
+
+Contract: TokenFactory
+Transaction: {
+  "from": "0x2e988a386a799f506693793c6a5af6b54dfaabfb",
+  "to": null,
+  "maxFeePerGas": "0x62ff83511",
+  "maxPriorityFeePerGas": "0x62ff833a5",
+  "gas": "0x4c4b40",
+  "input": "0x608080604052346100b8577ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a009081549060ff8260401c166100a957506001600160401b036002600160401b031982821601610064575b604051611bf790816100bd8239f35b6001600160401b031990911681179091556040519081527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d290602090a15f8080610055565b63f92ee8a960e01b8152600490fd5b5f80fdfe6080806040526004361015610012575f80fd5b5f3560e01c90816301ffc9a7146115af57508063025b22bc146114ed5780631a5da6c814611425578063248a9ca3146113ec5780632f2ff15d146113a35780632f3a3d5d1461137c57806336568abe146113355780633e199e8214610b805780634797c58714610b4657806375071d2a14610b0c57806391d1485414610ab75780639d23c4c714610a8f578063a217fddf14610a75578063aba02c1f14610a4d578063cc2a9a5b146107f7578063d0fb0203146107cf578063d547741f14610784578063e8fa6446146101195763ff7bce23146100ed575f80fd5b34610115575f366003190112610115576001546040516001600160a01b039091168152602090f35b5f80fd5b60c03660031901126101155767ffffffffffffffff6004358181116101155761014690369060040161165f565b6024358381116101155761015e90369060040161165f565b90926064359460ff8616860361011557600460843510156101155760a4359081116101155761019190369060040161165f565b335f9081527f6cf62b618036602158faeb9f96f20c80933d170498c8f86eb4a69401770bc0bd602052604090205490959060ff168015610708575b156106c3576044351561068557601260ff88161161064c57600354604051633996af3560e11b81526001600160a01b0390911696906020816004818b5afa90811561049d575f9161061a575b506040519063b0e3580f60e01b8252604435600483015260248201526020816044818b5afa5f91816105e6575b506105e057505f965b8734106105a8578715158061059f575b6104e1575b505f8054608881901c62ffffff16763d602d80600a3d3981f3363d3d373d3d3d363d7300000017825260781b6effffffffffffffffffffffffffffff19166e5af43d82803e903d91602b57fd5bf3176020526001600160a01b0390603790600990f0169788156104cf576001546002546001600160a01b0390811691168a3b156101155761031b8b885f8c81958d9761032d8c6040519a8b998a98899763ce246e6360e01b895260e060048a015260e4890191611794565b86810360031901602488015291611794565b91604435604485015260ff8b16606485015233608485015260a484015260c483015203925af1801561049d576104c0575b506004546001600160a01b031691823b156101155760405163d851c87960e01b8152600481018b9052610100602482015294859283926103a361010485018c8b611794565b8481036003190160448601526103ba908b89611794565b91604435606486015260ff16608485015260a48401608435906103dc916117b4565b3360c48501528382036003190160e48501526103f792611794565b03815a5f948591f193841561049d576104497f6e6ae68e7d7d45fbd855c40d1eaafa8de46c5fbec3ee26f1af88730e400bc92c94610457948a976104b1575b5060405197606089526060890191611794565b918683036020880152611794565b9260443560408201528033940390a3803411610479575b602082604051908152f35b5f8080610487819434611787565b8181156104a8575b3390f11561049d578161046e565b6040513d5f823e3d90fd5b506108fc61048f565b6104ba9061168d565b8a610436565b6104c99061168d565b8961035e565b60405163b06ebf3d60e01b8152600490fd5b604051633996af3560e11b815290602082600481845afa801561049d5789925f91610567575b5060405163da76460960e01b815260048101919091523360248201529160209183916044918391905af1801561049d571561026357602090813d8311610560575b61055281836116b5565b810103126101155788610263565b503d610548565b9250506020823d602011610597575b81610583602093836116b5565b810103126101155790518891906020610507565b3d9150610576565b5080151561025e565b60405162461bcd60e51b815260206004820152601060248201526f496e73756666696369656e742066656560801b6044820152606490fd5b9661024e565b9091506020813d602011610612575b81610602602093836116b5565b810103126101155751908a610245565b3d91506105f5565b90506020813d602011610644575b81610635602093836116b5565b81010312610115575189610218565b3d9150610628565b60405162461bcd60e51b81526020600482015260116024820152700c8cac6d2dac2d8e640e8dede40d0d2ced607b1b6044820152606490fd5b60405162461bcd60e51b81526020600482015260166024820152751d1bdd185b14dd5c1c1b1e4f8c081c995c5d5a5c995960521b6044820152606490fd5b60405162461bcd60e51b815260206004820152601c60248201527f43726561746f7220726f6c65206f72204b5943207265717569726564000000006044820152606490fd5b50600154604051632a5bb1b760e11b815233600482015290602090829060249082906001600160a01b03165afa90811561049d575f91610749575b506101cc565b90506020813d60201161077c575b81610764602093836116b5565b81010312610115575180151581036101155788610743565b3d9150610757565b34610115576040366003190112610115576107cd6004356107a3611618565b90805f525f80516020611ba28339815191526020526107c8600160405f20015461182b565b611ac4565b005b34610115575f366003190112610115576003546040516001600160a01b039091168152602090f35b346101155760c036600319011261011557610810611602565b610818611618565b906044356001600160a01b03818116918290036101155760643581811680910361011557608435928284168094036101155760a435928084168403610115577ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a0096875460ff8160401c16159767ffffffffffffffff821680159081610a45575b6001149081610a3b575b159081610a32575b50610a205767ffffffffffffffff1982166001178a55839189610a01575b50169485156109cc5786156109935760ff895460401c161561098157806108f161090192611877565b506108fb81611901565b506119ae565b506bffffffffffffffffffffffff60a01b94855f5416175f5516836001541617600155826002541617600255816003541617600355600454161760045561094457005b68ff00000000000000001981541690557fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2602060405160018152a1005b604051631afcd79f60e31b8152600490fd5b60405162461bcd60e51b81526020600482015260116024820152701c9959da5cdd1c9e481c995c5d5a5c9959607a1b6044820152606490fd5b60405162461bcd60e51b815260206004820152600d60248201526c1a5b5c1b081c995c5d5a5c9959609a1b6044820152606490fd5b68ffffffffffffffffff191668010000000000000001178a558a6108c8565b60405163f92ee8a960e01b8152600490fd5b9050158b6108aa565b303b1591506108a2565b8a9150610898565b34610115575f366003190112610115576002546040516001600160a01b039091168152602090f35b34610115575f3660031901126101155760206040515f8152f35b34610115575f366003190112610115576004546040516001600160a01b039091168152602090f35b3461011557604036600319011261011557610ad0611618565b6004355f525f80516020611ba283398151915260205260405f209060018060a01b03165f52602052602060ff60405f2054166040519015158152f35b34610115575f3660031901126101155760206040517f5719df9ef2c4678b547f89e4f5ae410dbf400fc51cf3ded434c55f6adea2c43f8152f35b34610115575f3660031901126101155760206040517f60f84e22dcea217c9a7721aaea62b0971fe29d0da3d3c250600e83e005d177638152f35b60c03660031901126101155767ffffffffffffffff60043581811161011557610bad90369060040161162e565b9060243583811161011557610bc690369060040161162e565b60449491943582811161011557610be190369060040161162e565b959060643584811161011557610bfb90369060040161162e565b97909360843586811161011557610c1690369060040161162e565b91909660a43590811161011557610c3190369060040161162e565b335f9081527f6cf62b618036602158faeb9f96f20c80933d170498c8f86eb4a69401770bc0bd60205260409020549193909160ff16156112f757828b14806112ee575b806112e5575b806112dc575b806112d3575b156112965760148b1161125f57610c9c8b6116d7565b9b610caa6040519d8e6116b5565b8b8d52610cb68c6116d7565b601f19013660208f01376003545f9b908c906001600160a01b03168e5b82106111635750508b3410611125575f908e8e5b8310610e63578d80151580610e4f575b610d7f575b803411610d52575b506040518091602082016020835281518091526020604084019201905f5b818110610d30575050500390f35b82516001600160a01b0316845285945060209384019390920191600101610d22565b5f8080610d60819434611787565b818115610d76575b3390f11561049d5781610d04565b506108fc610d68565b600354604051633996af3560e11b8152906001600160a01b0316602082600481845afa801561049d5783925f91610e17575b5060405163da76460960e01b815260048101919091523360248201529160209183916044918391905af1801561049d57610dec575b50610cfc565b602090813d8311610e10575b610e0281836116b5565b810103126101155782610de6565b503d610df8565b9250506020823d602011610e47575b81610e33602093836116b5565b810103126101155790518291906020610db1565b3d9150610e26565b506003546001600160a01b03161515610cf7565b8c908f8c898f928e610e9d8f928b610e968c610e8e81610e868f829783916116ff565b9a909b6116ff565b9790966116ef565b35976116ef565b359660ff8816880361011557898c610eb4926116ef565b3592600484101561011557610ee08f92610ee08f8d610ed691610ee8976116ff565b9890943691611741565b943691611741565b916e5af43d82803e903d91602b57fd5bf35f54763d602d80600a3d3981f3363d3d373d3d3d363d7300000062ffffff8260881c16175f526effffffffffffffffffffffffffffff199060781b161760205260018060a01b03603760095ff0169687156104cf576001546002546001600160a01b039182169116893b156101155760405163ce246e6360e01b815260e06004820152915f9183918291610fa5610f9360e485018b611b43565b8481036003190160248601528c611b43565b918c604485015260ff8816606485015233608485015260a484015260c48301520381838d5af1801561049d57611116575b506004546001600160a01b031691823b156101155760405163d851c87960e01b8152600481018a90526101006024820152948592839261101a610104850188611b43565b848103600319016044860152611030908a611b43565b918a606486015260ff16608485015260a4840161104c916117b4565b3360c48401528281036003190160e484015261106791611b43565b03815a5f948591f1801561049d5786937f6e6ae68e7d7d45fbd855c40d1eaafa8de46c5fbec3ee26f1af88730e400bc92c936110c592611107575b506110b7604051936060808652850190611b43565b908382036020850152611b43565b9360408201528033940390a3518310156110f3578f928f939160206001938360051b01015201918f90610ce7565b634e487b7160e01b5f52603260045260245ffd5b6111109061168d565b5f6110a2565b61111f9061168d565b5f610fd6565b60405162461bcd60e51b8152602060048201526016602482015275496e73756666696369656e7420746f74616c2066656560501b6044820152606490fd5b611170829e928a8c6116ef565b35604051633996af3560e11b8152602081600481865afa90811561049d575f9161122d575b506040519163b0e3580f60e01b835260048301526024820152602081604481855afa5f91816111f9575b506111f357505f915b82810181116111df578f92600191019e0191610cd3565b634e487b7160e01b5f52601160045260245ffd5b916111c8565b9091506020813d602011611225575b81611215602093836116b5565b810103126101155751905f6111bf565b3d9150611208565b90506020813d602011611257575b81611248602093836116b5565b8101031261011557515f611195565b3d915061123b565b60405162461bcd60e51b815260206004820152600f60248201526e546f6f206d616e7920746f6b656e7360881b6044820152606490fd5b60405162461bcd60e51b8152602060048201526015602482015274082e4e4c2f240d8cadccee8d040dad2e6dac2e8c6d605b1b6044820152606490fd5b50818114610c86565b50808c14610c80565b508b8514610c7a565b50848314610c74565b60405163e2517d3f60e01b81523360048201527f60f84e22dcea217c9a7721aaea62b0971fe29d0da3d3c250600e83e005d177636024820152604490fd5b346101155760403660031901126101155761134e611618565b336001600160a01b0382160361136a576107cd90600435611ac4565b60405163334bd91960e11b8152600490fd5b34610115575f366003190112610115575f546040516001600160a01b039091168152602090f35b34610115576040366003190112610115576107cd6004356113c2611618565b90805f525f80516020611ba28339815191526020526113e7600160405f20015461182b565b611a54565b34610115576020366003190112610115576004355f525f80516020611ba28339815191526020526020600160405f200154604051908152f35b346101155760203660031901126101155761143e611602565b6114466117d5565b6001600160a01b0381811680156114b557600480546001600160a01b031981169092179055604080516001600160a01b0393909216831682529190921660208301527f0e1e01d3a1bc108c283427a72564fa03f7400b162008588a168ac82e403456e59190819081015b0390a1005b60405162461bcd60e51b815260206004820152601060248201526f696e76616c696420726567697374727960801b6044820152606490fd5b3461011557602036600319011261011557611506611602565b61150e6117d5565b6001600160a01b03818116801561157b575f80546001600160a01b031981169092179055604080516001600160a01b0393909216831682529190921660208301527faa3f731066a578e5f39b4215468d826cdd15373cbc0dfc9cb9bdc649718ef7da9190819081016114b0565b60405162461bcd60e51b815260206004820152600c60248201526b1a5b9d985b1a59081a5b5c1b60a21b6044820152606490fd5b34610115576020366003190112610115576004359063ffffffff60e01b821680920361011557602091637965db0b60e01b81149081156115f1575b5015158152f35b6301ffc9a760e01b149050836115ea565b600435906001600160a01b038216820361011557565b602435906001600160a01b038216820361011557565b9181601f840112156101155782359167ffffffffffffffff8311610115576020808501948460051b01011161011557565b9181601f840112156101155782359167ffffffffffffffff8311610115576020838186019501011161011557565b67ffffffffffffffff81116116a157604052565b634e487b7160e01b5f52604160045260245ffd5b90601f8019910116810190811067ffffffffffffffff8211176116a157604052565b67ffffffffffffffff81116116a15760051b60200190565b91908110156110f35760051b0190565b91908110156110f35760051b81013590601e198136030182121561011557019081359167ffffffffffffffff8311610115576020018236038113610115579190565b92919267ffffffffffffffff82116116a1576040519161176b601f8201601f1916602001846116b5565b829481845281830111610115578281602093845f960137010152565b919082039182116111df57565b908060209392818452848401375f828201840152601f01601f1916010190565b9060048210156117c15752565b634e487b7160e01b5f52602160045260245ffd5b335f9081527fb7db2dd08fcb62d0c9e08c51941cae53c267786a0b75803fb7960902fc8ef97d602052604090205460ff161561180d57565b60405163e2517d3f60e01b81523360048201525f6024820152604490fd5b805f525f80516020611ba283398151915260205260405f20335f5260205260ff60405f205416156118595750565b6044906040519063e2517d3f60e01b82523360048301526024820152fd5b6001600160a01b03165f8181527fb7db2dd08fcb62d0c9e08c51941cae53c267786a0b75803fb7960902fc8ef97d60205260409020545f80516020611ba28339815191529060ff166118fb575f805260205260405f20815f5260205260405f20600160ff1982541617905533905f5f80516020611b828339815191528180a4600190565b50505f90565b6001600160a01b03165f8181527f6cf62b618036602158faeb9f96f20c80933d170498c8f86eb4a69401770bc0bd60205260409020547f60f84e22dcea217c9a7721aaea62b0971fe29d0da3d3c250600e83e005d1776391905f80516020611ba28339815191529060ff166119a757825f5260205260405f20815f5260205260405f20600160ff1982541617905533915f80516020611b828339815191525f80a4600190565b5050505f90565b6001600160a01b03165f8181527f021e7b47d957252238e482ce63807c8c87d29d066c819e84063657a50c13de0060205260409020547f5719df9ef2c4678b547f89e4f5ae410dbf400fc51cf3ded434c55f6adea2c43f91905f80516020611ba28339815191529060ff166119a757825f5260205260405f20815f5260205260405f20600160ff1982541617905533915f80516020611b828339815191525f80a4600190565b90815f525f80516020611ba28339815191528060205260405f209160018060a01b031691825f5260205260ff60405f205416155f146119a757825f5260205260405f20815f5260205260405f20600160ff1982541617905533915f80516020611b828339815191525f80a4600190565b90815f525f80516020611ba28339815191528060205260405f209160018060a01b031691825f5260205260ff60405f2054165f146119a757825f5260205260405f20815f5260205260405f2060ff19815416905533917ff6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b5f80a4600190565b91908251928382525f5b848110611b6d575050825f602080949584010152601f8019910116010190565b602081830181015184830182015201611b4d56fe2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d02dd7bc7dec4dceedda775e58dd541e08a116c6c53815c0bd028192f7b626800a2646970667358221220e23cf42b1632c9d990689cfdb556360701f08003b07bb71961c7abd825927b6664736f6c63430008160033",
+  "nonce": "0x4fb",
+  "chainId": "0x89"
+}
+ABI: [
+  {
+    "type": "constructor",
+    "inputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "DEFAULT_ADMIN_ROLE",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "SYSTEM_ROLE",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "TOKEN_CREATOR_ROLE",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "auditTrail",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract IAuditTrail"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "complianceManager",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract IComplianceManager"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "createToken",
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "internalType": "string"
+      },
+      {
+        "name": "symbol",
+        "type": "string",
+        "internalType": "string"
+      },
+      {
+        "name": "totalSupply",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "decimals",
+        "type": "uint8",
+        "internalType": "uint8"
+      },
+      {
+        "name": "tokenType",
+        "type": "uint8",
+        "internalType": "enum ITokenRegistry.TokenType"
+      },
+      {
+        "name": "metadataURI",
+        "type": "string",
+        "internalType": "string"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "payable"
+  },
+  {
+    "type": "function",
+    "name": "createTokenBatch",
+    "inputs": [
+      {
+        "name": "names",
+        "type": "string[]",
+        "internalType": "string[]"
+      },
+      {
+        "name": "symbols",
+        "type": "string[]",
+        "internalType": "string[]"
+      },
+      {
+        "name": "totalSupplies",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "decimalsArray",
+        "type": "uint8[]",
+        "internalType": "uint8[]"
+      },
+      {
+        "name": "tokenTypes",
+        "type": "uint8[]",
+        "internalType": "enum ITokenRegistry.TokenType[]"
+      },
+      {
+        "name": "metadataURIs",
+        "type": "string[]",
+        "internalType": "string[]"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address[]",
+        "internalType": "address[]"
+      }
+    ],
+    "stateMutability": "payable"
+  },
+  {
+    "type": "function",
+    "name": "feeManager",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract IFeeManager"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getRoleAdmin",
+    "inputs": [
+      {
+        "name": "role",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "grantRole",
+    "inputs": [
+      {
+        "name": "role",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "hasRole",
+    "inputs": [
+      {
+        "name": "role",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "initialize",
+    "inputs": [
+      {
+        "name": "_tokenImplementation",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "_complianceManager",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "_auditTrail",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "_feeManager",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "_tokenRegistry",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "admin",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "renounceRole",
+    "inputs": [
+      {
+        "name": "role",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "callerConfirmation",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "revokeRole",
+    "inputs": [
+      {
+        "name": "role",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "supportsInterface",
+    "inputs": [
+      {
+        "name": "interfaceId",
+        "type": "bytes4",
+        "internalType": "bytes4"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "tokenImplementation",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "tokenRegistry",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract ITokenRegistry"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "updateImplementation",
+    "inputs": [
+      {
+        "name": "newImpl",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "updateRegistry",
+    "inputs": [
+      {
+        "name": "newRegistry",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "event",
+    "name": "ImplementationUpdated",
+    "inputs": [
+      {
+        "name": "oldImpl",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      },
+      {
+        "name": "newImpl",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Initialized",
+    "inputs": [
+      {
+        "name": "version",
+        "type": "uint64",
+        "indexed": false,
+        "internalType": "uint64"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RoleAdminChanged",
+    "inputs": [
+      {
+        "name": "role",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "previousAdminRole",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "newAdminRole",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RoleGranted",
+    "inputs": [
+      {
+        "name": "role",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "account",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "sender",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RoleRevoked",
+    "inputs": [
+      {
+        "name": "role",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "account",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "sender",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "TokenCreated",
+    "inputs": [
+      {
+        "name": "tokenAddress",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "creator",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "symbol",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "totalSupply",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "TokenRegistryUpdated",
+    "inputs": [
+      {
+        "name": "oldRegistry",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      },
+      {
+        "name": "newRegistry",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "error",
+    "name": "AccessControlBadConfirmation",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "AccessControlUnauthorizedAccount",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "neededRole",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "FailedDeployment",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InsufficientBalance",
+    "inputs": [
+      {
+        "name": "balance",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "needed",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "InvalidInitialization",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "NotInitializing",
+    "inputs": []
+  }
+]
+
+Warning: To broadcast this transaction, add --broadcast to the previous command. See forge create --help for more.
+[2m2025-09-12T07:21:32.243614Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::codec::framed_write[0m[2m:[0m send [3mframe[0m[2m=[0mGoAway { error_code: NO_ERROR, last_stream_id: StreamId(0) }
+[2m2025-09-12T07:21:32.243630Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mh2::proto::connection[0m[2m:[0m Connection::poll; connection error [3merror[0m[2m=[0mGoAway(b"", NO_ERROR, Library)
+[2m2025-09-12T07:21:32.243682Z[0m [34mDEBUG[0m [1mReqwestTransport[0m[1m{[0m[3murl[0m[2m=[0mhttps://polygon-mainnet.g.alchemy.com/v2/psuuduxO31w5rAvCgXDk_PKR5NKcze22[1m}[0m[2m:[0m[1mConnection[0m[1m{[0m[3mpeer[0m[2m=[0mClient[1m}[0m[2m:[0m [2mrustls::common_state[0m[2m:[0m Sending warning alert CloseNotify
+./setup_deployment.sh: line 163: $'34m[INFO][0m': command not found
+./setup_deployment.sh: line 164: $'[0': command not found
+./setup_deployment.sh: line 164: $'32m[SUCCESS][0m': command not found
+./setup_deployment.sh: line 164: $'34m[INFO][0m': command not found
+./setup_deployment.sh: line 165: $'[0': command not found
+./setup_deployment.sh: line 165: $'32m[SUCCESS][0m': command not found
+./setup_deployment.sh: line 165: $'34m[INFO][0m': command not found
+./setup_deployment.sh: line 166: $'[0': command not found
+./setup_deployment.sh: line 166: $'32m[SUCCESS][0m': command not found
+[0;31m[ERROR][0m 2025-09-12 08:21:32 - Deployment failed with exit code 1
+[0;34m[INFO][0m 2025-09-12 08:21:32 - Check /home/sechmos/Documents/Tokenization/tokenization-backend/deployment.log for details

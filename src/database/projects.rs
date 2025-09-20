@@ -198,9 +198,7 @@ pub async fn get_project_by_id(pool: &PgPool, id: &Uuid) -> AppResult<Option<Pro
                 maximum_investment: r.get("maximum_investment"),
                 funds_raised: r.get("funds_raised"),
                 investor_count: r.get("investor_count"),
-                expected_return: r
-                    .get::<Option<Decimal>, _>("expected_return")
-                    .map(|d| d.to_string().parse::<f64>().unwrap_or(0.0)),
+                expected_return: r.get::<Option<Decimal>, _>("expected_return"),
                 investment_period_months: r.get("investment_period_months"),
                 property_details: r
                     .get::<Option<serde_json::Value>, _>("property_details")

@@ -4858,6 +4858,7 @@ dependencies = [
  "env_logger",
  "erased-serde",
  "ethers",
+ "eyre",
  "hex",
  "jsonwebtoken 9.3.1",
  "k256",

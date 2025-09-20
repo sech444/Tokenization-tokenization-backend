@@ -1,338 +1,19 @@
-# version: '3.8'
-
-# services:
-#   # PostgreSQL Database
-#   postgres:
-#     image: postgres:15-alpine
-#     container_name: tokenization_postgres
-#     restart: unless-stopped
-#     environment:
-#       POSTGRES_DB: tokenization_db
-#       POSTGRES_USER: postgres
-#       POSTGRES_PASSWORD: postgres123
-#       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
-#     ports:
-#       - "5432:5432"
-#     volumes:
-#       - postgres_data:/var/lib/postgresql/data
-#       - ./migrations:/docker-entrypoint-initdb.d
-#     networks:
-#       - tokenization_network
-#     healthcheck:
-#       test: ["CMD-SHELL", "pg_isready -U postgres -d tokenization_db"]
-#       interval: 10s
-#       timeout: 5s
-#       retries: 5
-#       start_period: 30s
-
-#   # Redis for caching and rate limiting
-#   redis:
-#     image: redis:7-alpine
-#     container_name: tokenization_redis
-#     restart: unless-stopped
-#     command: redis-server --appendonly yes --requirepass redis123
-#     ports:
-#       - "6379:6379"
-#     volumes:
-#       - redis_data:/data
-#     networks:
-#       - tokenization_network
-#     healthcheck:
-#       test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
-#       interval: 10s
-#       timeout: 5s
-#       retries: 5
-#       start_period: 10s
-
-#   # Local Ethereum node (Ganache)
-#   ganache:
-#     image: trufflesuite/ganache:latest
-#     container_name: tokenization_ganache
-#     restart: unless-stopped
-#     ports:
-#       - "8545:8545"
-#     command: >
-#       --wallet.deterministic
-#       --wallet.mnemonic "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about"
-#       --wallet.accounts 10
-#       --wallet.defaultBalance 1000
-#       --server.host 0.0.0.0
-#       --server.port 8545
-#       --chain.networkId 1337
-#       --chain.chainId 1337
-#       --database.dbPath /app/db
-#     volumes:
-#       - ganache_data:/app/db
-#     networks:
-#       - tokenization_network
-#     healthcheck:
-#       test: ["CMD-SHELL", "curl -f http://localhost:8545 || exit 1"]
-#       interval: 10s
-#       timeout: 5s
-#       retries: 5
-#       start_period: 20s
-
-#   # Rust Backend Application
-#   tokenization_backend:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile
-#       target: development
-#     container_name: tokenization_backend
-#     restart: unless-stopped
-#     ports:
-#       - "8080:8080"
-#       - "9090:9090" # Metrics port
-#     environment:
-#       - RUST_ENV=development
-#       - RUST_LOG=debug
-#       - DATABASE_URL=postgresql://postgres:postgres123@postgres:5432/tokenization_db
-#       - REDIS_URL=redis://:redis123@redis:6379
-#       - BLOCKCHAIN_RPC_URL=http://ganache:8545
-#       - BLOCKCHAIN_NETWORK=ganache
-#       - SERVER_HOST=0.0.0.0
-#       - SERVER_PORT=8080
-#       - CORS_ORIGINS=http://localhost:3000,http://localhost:3001
-#       # JWT Configuration
-#       - JWT_SECRET=development-jwt-secret-key-at-least-32-characters-long
-#       - JWT_EXPIRATION_HOURS=24
-#       # Email Configuration (using MailHog for development)
-#       - SMTP_HOST=mailhog
-#       - SMTP_PORT=1025
-#       - SMTP_USERNAME=
-#       - SMTP_PASSWORD=
-#       - FROM_EMAIL=noreply@tokenization.local
-#       - FROM_NAME=Tokenization Platform Dev
-#       # Development settings
-#       - ENABLE_SWAGGER_UI=true
-#       - ENABLE_DEBUG_ROUTES=true
-#       - MOCK_BLOCKCHAIN=false
-#       - MOCK_KYC_PROVIDER=true
-#       # File storage
-#       - FILE_STORAGE_PATH=/app/storage
-#     volumes:
-#       - ./src:/app/src
-#       - ./Cargo.toml:/app/Cargo.toml
-#       - ./Cargo.lock:/app/Cargo.lock
-#       - ./migrations:/app/migrations
-#       - file_storage:/app/storage
-#       - target_cache:/app/target
-#     networks:
-#       - tokenization_network
-#     depends_on:
-#       postgres:
-#         condition: service_healthy
-#       redis:
-#         condition: service_healthy
-#       ganache:
-#         condition: service_healthy
-#     healthcheck:
-#       test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
-#       interval: 30s
-#       timeout: 10s
-#       retries: 3
-#       start_period: 60s
-
-#   # MailHog for email testing in development
-#   mailhog:
-#     image: mailhog/mailhog:latest
-#     container_name: tokenization_mailhog
-#     restart: unless-stopped
-#     ports:
-#       - "1025:1025" # SMTP server
-#       - "8025:8025" # Web UI
-#     networks:
-#       - tokenization_network
-
-#   # Database migrations runner
-#   migrate:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile
-#       target: development
-#     container_name: tokenization_migrate
-#     environment:
-#       - DATABASE_URL=postgresql://postgres:postgres123@postgres:5432/tokenization_db
-#     volumes:
-#       - ./migrations:/app/migrations
-#     networks:
-#       - tokenization_network
-#     depends_on:
-#       postgres:
-#         condition: service_healthy
-#     command: ["sqlx", "migrate", "run"]
-#     profiles:
-#       - migration
-
-#   # pgAdmin for database management
-#   pgadmin:
-#     image: dpage/pgadmin4:latest
-#     container_name: tokenization_pgadmin
-#     restart: unless-stopped
-#     environment:
-#       PGADMIN_DEFAULT_EMAIL: admin@tokenization.local
-#       PGADMIN_DEFAULT_PASSWORD: admin123
-#       PGADMIN_CONFIG_SERVER_MODE: 'False'
-#       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
-#     ports:
-#       - "5050:80"
-#     volumes:
-#       - pgadmin_data:/var/lib/pgadmin
-#     networks:
-#       - tokenization_network
-#     depends_on:
-#       postgres:
-#         condition: service_healthy
-#     profiles:
-#       - admin
-
-#   # Redis Commander for Redis management
-#   redis_commander:
-#     image: rediscommander/redis-commander:latest
-#     container_name: tokenization_redis_commander
-#     restart: unless-stopped
-#     environment:
-#       - REDIS_HOSTS=local:redis:6379:0:redis123
-#       - HTTP_USER=admin
-#       - HTTP_PASSWORD=admin123
-#     ports:
-#       - "8081:8081"
-#     networks:
-#       - tokenization_network
-#     depends_on:
-#       redis:
-#         condition: service_healthy
-#     profiles:
-#       - admin
-
-#   # Prometheus for metrics collection
-#   prometheus:
-#     image: prom/prometheus:latest
-#     container_name: tokenization_prometheus
-#     restart: unless-stopped
-#     ports:
-#       - "9091:9090"
-#     volumes:
-#       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
-#       - prometheus_data:/prometheus
-#     command:
-#       - '--config.file=/etc/prometheus/prometheus.yml'
-#       - '--storage.tsdb.path=/prometheus'
-#       - '--web.console.libraries=/etc/prometheus/console_libraries'
-#       - '--web.console.templates=/etc/prometheus/consoles'
-#       - '--storage.tsdb.retention.time=200h'
-#       - '--web.enable-lifecycle'
-#     networks:
-#       - tokenization_network
-#     profiles:
-#       - monitoring
-
-#   # Grafana for metrics visualization
-#   grafana:
-#     image: grafana/grafana:latest
-#     container_name: tokenization_grafana
-#     restart: unless-stopped
-#     ports:
-#       - "3001:3000"
-#     environment:
-#       - GF_SECURITY_ADMIN_PASSWORD=admin123
-#       - GF_USERS_ALLOW_SIGN_UP=false
-#     volumes:
-#       - grafana_data:/var/lib/grafana
-#       - ./config/grafana/provisioning:/etc/grafana/provisioning
-#     networks:
-#       - tokenization_network
-#     depends_on:
-#       - prometheus
-#     profiles:
-#       - monitoring
-
-#   # MinIO for S3-compatible storage (development)
-#   minio:
-#     image: minio/minio:latest
-#     container_name: tokenization_minio
-#     restart: unless-stopped
-#     ports:
-#       - "9000:9000"
-#       - "9001:9001"
-#     environment:
-#       MINIO_ROOT_USER: minioadmin
-#       MINIO_ROOT_PASSWORD: minioadmin123
-#     volumes:
-#       - minio_data:/data
-#     command: server /data --console-address ":9001"
-#     networks:
-#       - tokenization_network
-#     healthcheck:
-#       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-#       interval: 30s
-#       timeout: 20s
-#       retries: 3
-#     profiles:
-#       - storage
-
-#   # Nginx reverse proxy for development
-#   nginx:
-#     image: nginx:alpine
-#     container_name: tokenization_nginx
-#     restart: unless-stopped
-#     ports:
-#       - "80:80"
-#       - "443:443"
-#     volumes:
-#       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
-#       - ./config/nginx/ssl:/etc/nginx/ssl
-#     networks:
-#       - tokenization_network
-#     depends_on:
-#       - tokenization_backend
-#     profiles:
-#       - proxy
-
-# volumes:
-#   postgres_data:
-#     driver: local
-#   redis_data:
-#     driver: local
-#   ganache_data:
-#     driver: local
-#   file_storage:
-#     driver: local
-#   target_cache:
-#     driver: local
-#   pgadmin_data:
-#     driver: local
-#   prometheus_data:
-#     driver: local
-#   grafana_data:
-#     driver: local
-#   minio_data:
-#     driver: local
-
-# networks:
-#   tokenization_network:
-#     driver: bridge
-#     ipam:
-#       config:
-#         - subnet: 172.20.0.0/16
-
-
-
-version: '3.8'
+version: "3.9"
 
 services:
-  # PostgreSQL Database
   postgres:
-    image: docker.io/postgres:15-alpine
+    image: postgres:15-alpine
     container_name: tokenization_postgres
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: tokenization_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres123
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./migrations:/docker-entrypoint-initdb.d
@@ -345,9 +26,8 @@ services:
       retries: 5
       start_period: 30s
 
-  # Redis for caching and rate limiting
   redis:
-    image: docker.io/redis:7-alpine
+    image: redis:7-alpine
     container_name: tokenization_redis
     restart: unless-stopped
     command: redis-server --appendonly yes --requirepass redis123
@@ -364,72 +44,22 @@ services:
       retries: 5
       start_period: 10s
 
-  # Local Ethereum node (Ganache)
-  ganache:
-    image: docker.io/trufflesuite/ganache:latest
-    container_name: tokenization_ganache
-    restart: unless-stopped
-    ports:
-      - "8545:8545"
-    command: >
-      --wallet.deterministic
-      --wallet.mnemonic "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about"
-      --wallet.accounts 10
-      --wallet.defaultBalance 1000
-      --server.host 0.0.0.0
-      --server.port 8545
-      --chain.networkId 1337
-      --chain.chainId 1337
-      --database.dbPath /app/db
-    volumes:
-      - ganache_data:/app/db
-    networks:
-      - tokenization_network
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8545 || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
-
-  # Rust Backend Application
   tokenization_backend:
     build:
       context: .
       dockerfile: Dockerfile
       target: development
+    image: sech44/tokenization:dev
     container_name: tokenization_backend
     restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      RUST_ENV: development
+      RUST_LOG: debug
     ports:
       - "8080:8080"
-      - "9090:9090" # Metrics port
-    environment:
-      - RUST_ENV=development
-      - RUST_LOG=debug
-      - DATABASE_URL=postgresql://postgres:postgres123@postgres:5432/tokenization_db
-      - REDIS_URL=redis://:redis123@redis:6379
-      - BLOCKCHAIN_RPC_URL=http://ganache:8545
-      - BLOCKCHAIN_NETWORK=ganache
-      - SERVER_HOST=0.0.0.0
-      - SERVER_PORT=8080
-      - CORS_ORIGINS=http://localhost:3000,http://localhost:3001
-      # JWT Configuration
-      - JWT_SECRET=development-jwt-secret-key-at-least-32-characters-long
-      - JWT_EXPIRATION_HOURS=24
-      # Email Configuration (using MailHog for development)
-      - SMTP_HOST=mailhog
-      - SMTP_PORT=1025
-      - SMTP_USERNAME=
-      - SMTP_PASSWORD=
-      - FROM_EMAIL=noreply@tokenization.local
-      - FROM_NAME=Tokenization Platform Dev
-      # Development settings
-      - ENABLE_SWAGGER_UI=true
-      - ENABLE_DEBUG_ROUTES=true
-      - MOCK_BLOCKCHAIN=false
-      - MOCK_KYC_PROVIDER=true
-      # File storage
-      - FILE_STORAGE_PATH=/app/storage
+      - "9090:9090"
     volumes:
       - ./src:/app/src
       - ./Cargo.toml:/app/Cargo.toml
@@ -437,6 +67,7 @@ services:
       - ./migrations:/app/migrations
       - file_storage:/app/storage
       - target_cache:/app/target
+      - cargo_cache:/usr/local/cargo/registry
     networks:
       - tokenization_network
     depends_on:
@@ -444,35 +75,25 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-      ganache:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
 
-  # MailHog for email testing in development
   mailhog:
-    image: docker.io/mailhog/mailhog:latest
+    image: mailhog/mailhog:latest
     container_name: tokenization_mailhog
     restart: unless-stopped
     ports:
-      - "1025:1025" # SMTP server
-      - "8025:8025" # Web UI
+      - "1025:1025"
+      - "8025:8025"
     networks:
       - tokenization_network
 
-  # Database migrations runner
   migrate:
     build:
       context: .
       dockerfile: Dockerfile
       target: development
     container_name: tokenization_migrate
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres123@postgres:5432/tokenization_db
+    env_file:
+      - .env
     volumes:
       - ./migrations:/app/migrations
     networks:
@@ -484,9 +105,8 @@ services:
     profiles:
       - migration
 
-  # pgAdmin for database management
   pgadmin:
-    image: docker.io/dpage/pgadmin4:latest
+    image: dpage/pgadmin4:latest
     container_name: tokenization_pgadmin
     restart: unless-stopped
     environment:
@@ -506,17 +126,16 @@ services:
     profiles:
       - admin
 
-  # Redis Commander for Redis management
   redis_commander:
-    image: docker.io/rediscommander/redis-commander:latest
+    image: rediscommander/redis-commander:latest
     container_name: tokenization_redis_commander
     restart: unless-stopped
     environment:
-      - REDIS_HOSTS=local:redis:6379:0:redis123
-      - HTTP_USER=admin
-      - HTTP_PASSWORD=admin123
+      REDIS_HOSTS: local:redis:6379:0:redis123
+      HTTP_USER: admin
+      HTTP_PASSWORD: admin123
     ports:
-      - "8081:8081"
+      - "8081:8080" # ✅ fixed conflict
     networks:
       - tokenization_network
     depends_on:
@@ -525,113 +144,14 @@ services:
     profiles:
       - admin
 
-  # Prometheus for metrics collection
-  prometheus:
-    image: docker.io/prom/prometheus:latest
-    container_name: tokenization_prometheus
-    restart: unless-stopped
-    ports:
-      - "9091:9090"
-    volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
-      - '--storage.tsdb.retention.time=200h'
-      - '--web.enable-lifecycle'
-    networks:
-      - tokenization_network
-    profiles:
-      - monitoring
-
-  # Grafana for metrics visualization
-  grafana:
-    image: docker.io/grafana/grafana:latest
-    container_name: tokenization_grafana
-    restart: unless-stopped
-    ports:
-      - "3001:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin123
-      - GF_USERS_ALLOW_SIGN_UP=false
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - ./config/grafana/provisioning:/etc/grafana/provisioning
-    networks:
-      - tokenization_network
-    depends_on:
-      - prometheus
-    profiles:
-      - monitoring
-
-  # MinIO for S3-compatible storage (development)
-  minio:
-    image: docker.io/minio/minio:latest
-    container_name: tokenization_minio
-    restart: unless-stopped
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin123
-    volumes:
-      - minio_data:/data
-    command: server /data --console-address ":9001"
-    networks:
-      - tokenization_network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
-    profiles:
-      - storage
-
-  # Nginx reverse proxy for development
-  nginx:
-    image: docker.io/nginx:alpine
-    container_name: tokenization_nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./config/nginx/ssl:/etc/nginx/ssl
-    networks:
-      - tokenization_network
-    depends_on:
-      - tokenization_backend
-    profiles:
-      - proxy
-
 volumes:
   postgres_data:
-    driver: local
   redis_data:
-    driver: local
-  ganache_data:
-    driver: local
   file_storage:
-    driver: local
   target_cache:
-    driver: local
   pgadmin_data:
-    driver: local
-  prometheus_data:
-    driver: local
-  grafana_data:
-    driver: local
-  minio_data:
-    driver: local
+  cargo_cache:
 
 networks:
   tokenization_network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16

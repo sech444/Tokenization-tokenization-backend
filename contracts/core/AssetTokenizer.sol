@@ -295,29 +295,17 @@ contract AssetTokenizer is
         emit AssetValued(assetId, value, msg.sender, methodology);
     }
 
-    // function approveAsset(uint256 assetId) external onlyRole(ASSET_ADMIN_ROLE) {
-    //     require(assets[assetId].assetId != 0, "Asset not found");
+        // ---------------------------
+        // Admin configuration setters
+        // ---------------------------
 
-    //     Asset storage asset = assets[assetId];
-    //     require(asset.status == AssetStatus.UNDER_REVIEW, "Asset not under review");
+        /// @notice Updates the minimum asset value required for tokenization
+        /// @param newValue New minimum value (must be > 0)
+    function setMinAssetValue(uint256 newValue) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(newValue > 0, "Invalid min asset value");
+        minAssetValue = newValue;
+    }
 
-    //     uint256 validValuations = getValidValuationsCount(assetId);
-    //     require(validValuations >= minValuations, "Insufficient valuations");
-
-    //     asset.status = AssetStatus.VERIFIED;
-    //     asset.totalValue = getAverageValuation(assetId);
-
-    //     assetApprovals[msg.sender][assetId] = true;
-
-    //     auditTrail.logTransaction(
-    //         keccak256("ASSET_APPROVED"),
-    //         msg.sender,
-    //         assetId,
-    //         abi.encodePacked(asset.totalValue)
-    //     );
-
-    //     emit AssetApproved(assetId, msg.sender);
-    // }
     function approveAsset(uint256 assetId) external onlyRole(ASSET_ADMIN_ROLE) {
         require(assets[assetId].assetId != 0, "Asset not found");
 

@@ -4,6 +4,7 @@ use axum::{
     extract::{Path, Query, State},
     response::Json,
 };
+use crate::services::project::ProjectService;
 use serde_json::json;
 use std::collections::HashMap;
 use tracing::{error, info};
@@ -101,6 +102,8 @@ pub async fn list_tokens(
     }))
 }
 
+
+
 /// Create a new token
 pub async fn create_token(
     claims: Claims,
@@ -108,19 +111,33 @@ pub async fn create_token(
     Json(payload): Json<CreateTokenRequest>,
 ) -> AppResult<Json<TokenResponse>> {
     info!(
-        "Creating token '{}' for user {}",
-        payload.name, claims.user_id
+        "User {} is creating token '{}' for project {}",
+        claims.user_id, payload.name, payload.project_id
     );
 
+    // Validate input
     payload
         .validate()
         .map_err(|e| AppError::BadRequest(format!("Validation failed: {:?}", e)))?;
+
+    // ✅ Verify project belongs to this user
+    let project_service = ProjectService::new(&state.db);
+    let project = project_service
+        .get_project_by_id(payload.project_id)
+        .await
+        .map_err(|_| AppError::NotFound("Project not found".to_string()))?;
+
+    if project.owner_id != claims.user_id {
+        return Err(AppError::Forbidden(
+            "You do not own this project".to_string(),
+        ));
+    }
 
     let token_service = TokenService::new(&state.db);
 
     let new_token = Token {
         id: Uuid::new_v4(),
-        project_id: payload.project_id,
+        project_id: project.id,
         owner_id: claims.user_id,
         name: payload.name,
         symbol: payload.symbol.to_uppercase(),
@@ -151,6 +168,7 @@ pub async fn create_token(
 
     Ok(Json(TokenResponse::from(created_token)))
 }
+
 
 /// Get a specific token by ID
 pub async fn get_token(

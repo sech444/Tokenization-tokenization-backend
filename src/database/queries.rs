@@ -79,30 +79,6 @@ pub struct KycRecord {
     pub rejection_reason: Option<String>,
 }
 
-impl Database {
-    pub async fn new(database_url: &str) -> Result<Self, sqlx::Error> {
-        let pool = PgPool::connect(database_url).await?;
-        Ok(Database { pool })
-    }
-
-    pub async fn migrate(&self) -> Result<(), sqlx::Error> {
-        self.create_tables().await?;
-        Ok(())
-    }
-
-    async fn create_tables(&self) -> Result<(), sqlx::Error> {
-        // Create extensions
-        sqlx::query("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";")
-            .execute(&self.pool)
-            .await?;
-
-        Ok(())
-    }
-
-    pub fn pool(&self) -> &PgPool {
-        &self.pool
-    }
-}
 
 // KYC functions
 pub async fn initiate_kyc(pool: &PgPool, user_id: Uuid) -> AppResult<KycVerification> {
@@ -750,43 +726,88 @@ pub async fn get_project(
 }
 
 
-
-
-pub async fn list_users(
+pub async fn fetch_users(
     pool: &PgPool,
-    _query: &UserListQuery,
+    query: &UserListQuery,
     page: u32,
     limit: u32,
 ) -> Result<(Vec<UserSummary>, i64), AppError> {
     let offset = (page - 1) * limit;
 
-    let rows: Vec<UserSummary> = sqlx::query_as!(
-        UserSummary,
+    let rows = sqlx::query_as::<_, UserSummary>(
         r#"
         SELECT 
-            id, 
+            id,
             email,
-            status as "status: _", 
+            status::text as status,    -- alias for SQLx
             last_login,
-            COALESCE(role::text, 'user') as "role!", 
-            is_active, 
+            role::text as role,        -- alias for SQLx
+            is_active,
             created_at
         FROM users
         ORDER BY created_at DESC
         LIMIT $1 OFFSET $2
-        "#,
-        limit as i64,
-        offset as i64,
+        "#
     )
+    .bind(limit as i64)
+    .bind(offset as i64)
     .fetch_all(pool)
-    .await?;
+    .await
+    .map_err(|e| AppError::DatabaseError(e.to_string()))?;
+
+
 
     let total_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM users")
         .fetch_one(pool)
-        .await?;
+        .await
+        .map_err(|e| AppError::DatabaseError(e.to_string()))?;
 
     Ok((rows, total_count.0))
 }
+
+
+
+
+// src/database/queries.rs
+// pub async fn fetch_users(
+//     pool: &PgPool,
+//     query: &UserListQuery,
+//     page: u32,
+//     limit: u32,
+// ) -> Result<(Vec<UserSummary>, i64), AppError> {
+//     let offset = (page - 1) * limit;
+
+//     let rows = sqlx::query_as::<_, UserSummary>(
+//         r#"
+//         SELECT 
+//             id, 
+//             email,
+//             status as "status: UserStatus",
+//             last_login,
+//             role as "role: UserRole",
+//             is_active, 
+//             created_at
+//         FROM users
+//         ORDER BY created_at DESC
+//         LIMIT $1 OFFSET $2
+//         "#
+//     )
+//     .bind(limit as i64)
+//     .bind(offset as i64)
+//     .fetch_all(pool)
+//     .await
+//     .map_err(|e| AppError::DatabaseError(e.to_string()))?;
+
+//     let total_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM users")
+//         .fetch_one(pool)
+//         .await
+//         .map_err(|e| AppError::DatabaseError(e.to_string()))?;
+
+//     Ok((rows, total_count.0))
+// }
+
+
+
 
 /// Count all users
 pub async fn count_users(pool: &PgPool) -> Result<i64, sqlx::Error> {
@@ -1204,48 +1225,29 @@ pub async fn update_kyc_status_simple(
     Ok(())
 }
 
-pub async fn get_pending_kyc(pool: &PgPool) -> AppResult<Vec<KycRecord>> {
-    let query = r#"
-        SELECT id, user_id, verification_status, risk_level,
-               documents_verified, identity_verified, address_verified,
-               phone_verified, email_verified, verification_score, 
-               verification_date, expiry_date, rejection_reason,
-               created_at, updated_at
-        FROM kyc_verifications 
+use crate::models::kyc::KycListItem;
+
+pub async fn get_pending_kyc(db: &PgPool) -> Result<Vec<KycListItem>, sqlx::Error> {
+    let rows = sqlx::query_as::<_, KycListItem>(
+        r#"
+        SELECT 
+            id, 
+            user_id, 
+            verification_status::text,   -- cast to text
+            risk_level::text,            -- cast to text
+            created_at
+        FROM kyc_verifications
         WHERE verification_status = 'pending'
-        ORDER BY created_at ASC
-    "#;
+        ORDER BY created_at DESC
+        "#
+    )
+    .fetch_all(db)
+    .await?;
 
-    let rows = sqlx::query(query)
-        .fetch_all(pool)
-        .await
-        .map_err(|e| AppError::DatabaseError(e.to_string()))?;
-
-    let mut pending_kyc = Vec::new();
-    
-    for row in rows {
-        let kyc_record = KycRecord {
-            id: row.get("id"),
-            user_id: row.get("user_id"),
-            verification_status: row.get::<String, _>("verification_status").parse()
-                .map_err(|_| AppError::ValidationError("Invalid verification status".to_string()))?,
-            risk_level: row.get::<String, _>("risk_level").parse()
-                .map_err(|_| AppError::ValidationError("Invalid risk level".to_string()))?,
-            documents_verified: row.get::<Option<bool>, _>("documents_verified").unwrap_or(false),
-            identity_verified: row.get::<Option<bool>, _>("identity_verified").unwrap_or(false),
-            address_verified: row.get::<Option<bool>, _>("address_verified").unwrap_or(false),
-            phone_verified: row.get::<Option<bool>, _>("phone_verified").unwrap_or(false),
-            email_verified: row.get::<Option<bool>, _>("email_verified").unwrap_or(false),
-            verification_score: row.get("verification_score"),
-            verification_date: row.get("verification_date"),
-            expiry_date: row.get("expiry_date"),
-            rejection_reason: row.get("rejection_reason"),
-        };
-        pending_kyc.push(kyc_record);
-    }
-
-    Ok(pending_kyc)
+    Ok(rows)
 }
+
+
 
 // Alternative version with additional user information (more useful for admin review)
 pub async fn get_pending_kyc_with_user_info(pool: &PgPool) -> AppResult<Vec<serde_json::Value>> {
@@ -1311,9 +1313,9 @@ pub async fn get_pending_kyc_with_user_info(pool: &PgPool) -> AppResult<Vec<serd
     Ok(pending_kyc)
 }
 
-// Version that returns count and records separately
-pub async fn get_pending_kyc_summary(pool: &PgPool) -> AppResult<(Vec<KycRecord>, usize)> {
-    let pending_kyc = get_pending_kyc(pool).await?;
-    let count = pending_kyc.len();
-    Ok((pending_kyc, count))
-}
+// // Version that returns count and records separately
+// pub async fn get_pending_kyc_summary(pool: &PgPool) -> AppResult<(Vec<KycRecord>, usize)> {
+//     let pending_kyc = get_pending_kyc(pool).await?;
+//     let count = pending_kyc.len();
+//     Ok((pending_kyc, count))
+// }

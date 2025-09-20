@@ -1,24 +1,43 @@
 // src/handlers/admin.rs
 
 use axum::{
-    extract::{Path, Query, State},
+    extract::{Path, Query, State, Extension},
     response::Json,
-    Extension,
 };
+
+// use axum::{
+//     extract::{State, Query},
+//     Json,
+// };
+use crate::{
+    AppState,
+    middleware::auth::RequireAdmin,
+    utils::errors::{AppError, AppResult},
+};
+// use serde::Deserialize;
+// use chrono::Utc;
+
+use crate::handlers::auth::ApproveKycRequest;
+// use sqlx::PgPool;
+// use crate::middleware::auth::RequireAdmin;
+use crate::models::kyc::UpdateKycParams;
 use sqlx::FromRow;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 use crate::database::{projects, queries, transactions};
+use tracing::info;
+ use crate::database::users;
+// use tracing::warn;
 use crate::{
-    AppState,
+    // AppState,
     // database::queries: as db,
     models::{
         kyc::{RiskLevel, VerificationStatus},
         project::ProjectStatus, 
         user::{User, UserRole, UserStatus},
     },
-    utils::errors::{AppError, AppResult},
+    
 };
 
 // ---------------------------------------------------------------------------
@@ -48,29 +67,21 @@ pub struct FinancialsBlock {
     pub completed_volume: Option<f64>,
 }
 
-// #[derive(Debug, Serialize)]
-// pub struct UserSummary {
-//     pub id: Uuid,
-//     pub email: String,
-//     pub role: String,
-//     pub status: UserStatus,
-//     pub created_at: DateTime<Utc>,
-//     pub last_login: Option<DateTime<Utc>>,
-//     // pub role: String,
-//     pub is_active: Option<bool>,
-//     // pub created_at: chrono::NaiveDateTime,
-// }
 
-// #[derive(Debug, Serialize)]
-#[derive(Debug, Serialize)]
+
+
+
+// src/handlers/admin.rs - Add the missing derives
+
+#[derive(Debug, Serialize, sqlx::FromRow)]
 pub struct UserSummary {
     pub id: Uuid,
     pub email: String,
-    pub role: Option<String>,    // Change to Option<String>
-    pub status: UserStatus,
-    pub created_at: DateTime<Utc>,
+    pub status: String,   // changed from UserStatus
     pub last_login: Option<DateTime<Utc>>,
-    pub is_active: Option<bool>,
+    pub role: String,     // changed from UserRole
+    pub is_active: bool,
+    pub created_at: DateTime<Utc>,
 }
 
 #[derive(Debug, Serialize)]
@@ -92,11 +103,11 @@ pub struct UserListQuery {
     pub is_active: Option<bool>,
 }
 
-#[derive(Debug, Deserialize)]
-pub struct UpdateUserRequest {
-    pub role: Option<UserRole>,
-    pub status: Option<UserStatus>,
-}
+// #[derive(Debug, Deserialize)]
+// pub struct UpdateUserRequest {
+//     pub role: Option<UserRole>,
+//     pub status: Option<UserStatus>,
+// }
 
 #[derive(Debug, Serialize)]
 pub struct UpdateUserResponse {
@@ -218,4 +229,60 @@ pub async fn list_kyc_verifications(
         total_pages,
     }))
 }
+
+
+    #[derive(Deserialize)]
+    pub struct Pagination {
+        pub page: Option<u32>,
+        pub limit: Option<u32>,
+    }
+
+
+
+    /// Get pending KYC requests (admin only)
+    pub async fn pending_kyc(
+        State(state): State<AppState>,
+        RequireAdmin(admin): RequireAdmin,
+    ) -> AppResult<Json<serde_json::Value>> {
+        let pending_requests = queries::get_pending_kyc(&state.db).await?;
+        let count = pending_requests.len();
+
+        info!("Admin {} retrieved {} pending KYC requests", admin.id, count);
+
+        Ok(Json(serde_json::json!({
+            "pending_kyc": pending_requests,
+            "count": count
+        })))
+    }
+
+    /// Approve or reject KYC request (admin only)
+    pub async fn approve_kyc(
+        State(state): State<AppState>,
+        RequireAdmin(admin): RequireAdmin,
+        Json(payload): Json<ApproveKycRequest>,
+    ) -> AppResult<Json<serde_json::Value>> {
+        let user = users::get_user_by_id(&state.db, &payload.user_id).await?
+            .ok_or_else(|| AppError::validation("User not found"))?;
+
+        queries::update_kyc_status(&state.db, UpdateKycParams {
+            user_id: payload.user_id,
+            approved: payload.approved,
+            notes: payload.notes.clone(),
+            approved_by: admin.id,
+        }).await?;
+
+        let action = if payload.approved { "approved" } else { "rejected" };
+
+        Ok(Json(serde_json::json!({
+            "success": true,
+            "message": format!("KYC {} for user {}", action, payload.user_id),
+            "user_id": payload.user_id,
+            "approved": payload.approved,
+            "notes": payload.notes,
+            "approved_by": admin.id,
+            "approved_at": Utc::now().to_rfc3339()
+        })))
+    }
+
+
 

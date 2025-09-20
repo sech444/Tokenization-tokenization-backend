@@ -87,11 +87,12 @@ pub struct EmailConfig {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PushConfig {
-    pub firebase_key: String,
-    pub apns_key: String,
-    pub apns_key_id: String,
-    pub apns_team_id: String,
+    pub firebase_key: Option<String>,
+    pub apns_key: Option<String>,
+    pub apns_key_id: Option<String>,
+    pub apns_team_id: Option<String>,
 }
+
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SecurityConfig {
@@ -106,6 +107,13 @@ pub struct SecurityConfig {
 impl Config {
     pub fn from_env() -> Result<Self, ConfigError> {
         dotenv::dotenv().ok();
+
+
+        // Try env-specific file if RUST_ENV is set
+        if let Ok(env) = std::env::var("RUST_ENV") {
+            let filename = format!(".env.{}", env);
+            dotenv::from_filename(&filename).ok();
+        }
 
         let server = ServerConfig {
             host: env::var("SERVER_HOST").unwrap_or_else(|_| "0.0.0.0".to_string()),
@@ -187,6 +195,11 @@ impl Config {
                 .map_err(|_| ConfigError::InvalidGasPrice)?,
         };
 
+        
+        dotenv::dotenv().ok();
+        println!("Loaded env file, FIREBASE_KEY={:?}", std::env::var("FIREBASE_KEY"));
+
+
         let compliance = ComplianceConfig {
             kyc_provider: env::var("KYC_PROVIDER").unwrap_or_else(|_| "jumio".to_string()),
             kyc_api_key: env::var("KYC_API_KEY").map_err(|_| ConfigError::MissingKycApiKey)?,
@@ -218,15 +231,14 @@ impl Config {
                     .unwrap_or_else(|_| "Tokenization Platform".to_string()),
             },
             push: PushConfig {
-                firebase_key: env::var("FIREBASE_KEY")
-                    .map_err(|_| ConfigError::MissingFirebaseKey)?,
-                apns_key: env::var("APNS_KEY").map_err(|_| ConfigError::MissingApnsKey)?,
-                apns_key_id: env::var("APNS_KEY_ID").map_err(|_| ConfigError::MissingApnsKeyId)?,
-                apns_team_id: env::var("APNS_TEAM_ID")
-                    .map_err(|_| ConfigError::MissingApnsTeamId)?,
+                firebase_key: env::var("FIREBASE_KEY").ok(),
+                apns_key: env::var("APNS_KEY").ok(),
+                apns_key_id: env::var("APNS_KEY_ID").ok(),
+                apns_team_id: env::var("APNS_TEAM_ID").ok(),
             },
             webhook_url: env::var("WEBHOOK_URL").ok(),
         };
+
 
         let security = SecurityConfig {
             bcrypt_cost: env::var("BCRYPT_COST")
@@ -403,17 +415,17 @@ impl Default for Config {
                 algorithm: "HS256".to_string(),
             },
             blockchain: BlockchainConfig {
-                network: "localhost".to_string(),
-                rpc_url: "http://localhost:8545".to_string(),
-                private_key: "0x".to_string(),
+                network: "amoy".to_string(),  // Changed from "localhost"
+                rpc_url: "https://rpc-amoy.polygon.technology".to_string(),  // Changed from localhost
+                private_key: "0x".to_string(),  // Add your actual private key
                 contract_addresses: ContractAddresses {
-                    token_factory: "0x".to_string(),
+                    token_factory: "0x".to_string(),  // Add your deployed contract addresses
                     marketplace: "0x".to_string(),
                     compliance: "0x".to_string(),
                     staking: "0x".to_string(),
                 },
                 gas_limit: 3000000,
-                gas_price: 20000000000,
+                gas_price: 20000000000,  // 20 gwei - might be too high for Amoy
             },
             compliance: ComplianceConfig {
                 kyc_provider: "jumio".to_string(),
@@ -423,6 +435,24 @@ impl Default for Config {
                 auto_verification: false,
                 verification_timeout_hours: 72,
             },
+            // notification: NotificationConfig {
+            //     email: EmailConfig {
+            //         smtp_host: "smtp.gmail.com".to_string(),
+            //         smtp_port: 587,
+            //         smtp_username: "".to_string(),
+            //         smtp_password: "".to_string(),
+            //         from_address: "noreply@tokenization.com".to_string(),
+            //         from_name: "Tokenization Platform".to_string(),
+            //     },
+            //     push: PushConfig {
+            //         firebase_key: "".to_string(),
+            //         apns_key: "".to_string(),
+            //         apns_key_id: "".to_string(),
+            //         apns_team_id: "".to_string(),
+            //     },
+            //     webhook_url: None,
+            // },
+
             notification: NotificationConfig {
                 email: EmailConfig {
                     smtp_host: "smtp.gmail.com".to_string(),
@@ -433,13 +463,14 @@ impl Default for Config {
                     from_name: "Tokenization Platform".to_string(),
                 },
                 push: PushConfig {
-                    firebase_key: "".to_string(),
-                    apns_key: "".to_string(),
-                    apns_key_id: "".to_string(),
-                    apns_team_id: "".to_string(),
+                    firebase_key: None,
+                    apns_key: None,
+                    apns_key_id: None,
+                    apns_team_id: None,
                 },
                 webhook_url: None,
             },
+
             security: SecurityConfig {
                 bcrypt_cost: 12,
                 rate_limit_requests: 100,
@@ -451,3 +482,4 @@ impl Default for Config {
         }
     }
 }
+

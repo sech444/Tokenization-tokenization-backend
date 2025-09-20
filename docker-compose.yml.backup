@@ -1,0 +1,83 @@
+# Rust Backend Application
+  tokenization_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: tokenization_backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "9090:9090" # Metrics port
+    environment:
+      - RUST_ENV=development
+      - RUST_LOG=debug
+      
+      # ============================================================================= 
+      # Database Configuration
+      # ============================================================================= 
+      - POSTGRES_URL=postgres://8cfdde2776b9e0f0662488be70e876ae2894f1a3cd06994b390acf38197d3c4f:sk_qLilo5f9OziArWt4hzbIq@db.prisma.io:5432/?sslmode=require
+      - PRISMA_DATABASE_URL=prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19xTGlsbzVmOU96aUFyV3Q0aHpiSXEiLCJhcGlfa2V5IjoiMDFLM0dOSFcyVFQ0SkFURzlWWDRUMFI5OUgiLCJ0ZW5hbnRfaWQiOiI4Y2ZkZGUyNzc2YjllMGYwNjYyNDg4YmU3MGU4NzZhZTI4OTRmMWEzY2QwNjk5NGIzOTBhY2YzODE5N2QzYzRmIiwiaW50ZXJuYWxfc2VjcmV0IjoiYmNjNmJmYzYtMjZlZC00YjVlLTljZTctOTMyMzQwMjc2MGIzIn0.9u3ynMWaiif4pJocszlIoC8aOqr489uq5hmZBPBf_R4
+      - DATABASE_URL=postgres://8cfdde2776b9e0f0662488be70e876ae2894f1a3cd06994b390acf38197d3c4f:sk_qLilo5f9OziArWt4hzbIq@db.prisma.io:5432/?sslmode=require
+      - DB_MAX_CONNECTIONS=10
+      - DB_MIN_CONNECTIONS=1
+      - DB_CONNECTION_TIMEOUT=30
+      - DB_IDLE_TIMEOUT=600
+      
+      # =============================================================================
+      # Blockchain Configuration - Polygon Amoy Testnet
+      # =============================================================================
+      - BLOCKCHAIN_RPC_URL=https://rpc-amoy.polygon.technology/
+      - BLOCKCHAIN_NETWORK=polygon_amoy
+      - BLOCKCHAIN_CHAIN_ID=80002
+      - BLOCKCHAIN_NATIVE_TOKEN=MATIC
+      
+      # Redis Configuration
+      - REDIS_URL=redis://:redis123@redis:6379
+      
+      # Server Configuration
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8080
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:3001
+      
+      # JWT Configuration
+      - JWT_SECRET=development-jwt-secret-key-at-least-32-characters-long
+      - JWT_EXPIRATION_HOURS=24
+      
+      # Email Configuration (using MailHog for development)
+      - SMTP_HOST=mailhog
+      - SMTP_PORT=1025
+      - SMTP_USERNAME=
+      - SMTP_PASSWORD=
+      - FROM_EMAIL=noreply@tokenization.local
+      - FROM_NAME=Tokenization Platform Dev
+      
+      # Development settings
+      - ENABLE_SWAGGER_UI=true
+      - ENABLE_DEBUG_ROUTES=true
+      - MOCK_BLOCKCHAIN=false
+      - MOCK_KYC_PROVIDER=true
+      
+      # File storage
+      - FILE_STORAGE_PATH=/app/storage
+    volumes:
+      - ./src:/app/src
+      - ./Cargo.toml:/app/Cargo.toml
+      - ./Cargo.lock:/app/Cargo.lock
+      - ./migrations:/app/migrations
+      - file_storage:/app/storage
+      - target_cache:/app/target
+    networks:
+      - tokenization_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      # Removed ganache dependency
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
