@@ -49,4 +49,5 @@ setup-env.sh  # Include for dev
 
 # Git
 .git
-.github  # Optional workflows
+.github  # Optional workflowsnode_modules/
+.env*
