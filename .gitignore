@@ -1,26 +1,26 @@
-# Dependencies
-node_modules/
-npm-debug.log*
+# Rust
+target/
+Cargo.lock  # Optional: Exclude if regenerating; include for reproducibility
 
-# Production builds
-build/
-dist/
-
-# Environment variables
+# Environment and secrets
 .env
-.env.dev
-.env.development
+.env.*
 .env.local
 .env.backup
 .env.staging
 .env.template
 .env.production
+.env.development
 
-# Cache directories
+# Logs and temp
+*.log
+logs/
+tmp/
+temp/
 .cache/
-.parcel-cache/
+.cargo/
 
-# OS generated files
+# OS and editor
 .DS_Store
 .DS_Store?
 ._*
@@ -28,19 +28,24 @@ dist/
 .Trashes
 ehthumbs.db
 Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+*~
 
+# Documentation/tests (optional)
+docs/
+examples/
+tests/
+benches/
 
+# Docker (if not needed in repo)
+Dockerfile  # Optional: Include it!
 .dockerignore
+docker-compose.yml  # Include for local testing
+setup-env.sh  # Include for dev
+
+# Git
 .git
-.gitignore
-README.md
-.env
-.env.*
-docker-compose*.yml
-*.log
-tmp/
-temp/
-dist/
-node_modules/
-.cargo/registry
-.cargo/git
+.github  # Optional workflows
