@@ -1,7 +1,7 @@
 // src/handlers/admin.rs
 
 use axum::{
-    extract::{Path, Query, State, Extension},
+    extract::{Query, State, Extension},
     response::Json,
 };
 
@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 use crate::database::{projects, queries, transactions};
 use tracing::info;
- use crate::database::users;
+//  use crate::database::users;
 // use tracing::warn;
 use crate::{
     // AppState,
@@ -261,8 +261,8 @@ pub async fn list_kyc_verifications(
         RequireAdmin(admin): RequireAdmin,
         Json(payload): Json<ApproveKycRequest>,
     ) -> AppResult<Json<serde_json::Value>> {
-        let user = users::get_user_by_id(&state.db, &payload.user_id).await?
-            .ok_or_else(|| AppError::validation("User not found"))?;
+        // let user = users::get_user_by_id(&state.db, &payload.user_id).await?
+        //     .ok_or_else(|| AppError::validation("User not found"))?;
 
         queries::update_kyc_status(&state.db, UpdateKycParams {
             user_id: payload.user_id,

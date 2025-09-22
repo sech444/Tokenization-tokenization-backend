@@ -1,13 +1,20 @@
-// ============================================================================
-
 // contracts/interfaces/core/IAdminGovernance.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
+/**
+ * @title IAdminGovernance
+ * @dev The complete interface for the AdminGovernance contract.
+ */
 interface IAdminGovernance {
+    // --- Enums ---
     enum ProposalState { PENDING, ACTIVE, SUCCEEDED, DEFEATED, EXECUTED, CANCELLED, EXPIRED }
     enum VoteType { AGAINST, FOR, ABSTAIN }
     
+    // ===== THIS IS THE FIX: Add the missing initialize function =====
+    function initialize(address admin, address auditTrail) external;
+
+    // --- Other Functions ---
     function propose(
         string calldata title,
         string calldata description,

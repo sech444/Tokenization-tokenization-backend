@@ -44,30 +44,22 @@ services:
       retries: 5
       start_period: 10s
 
+  # Optional: Keep this for testing the production Docker image locally
   tokenization_backend:
     build:
       context: .
       dockerfile: Dockerfile
-      target: development
-    image: sech44/tokenization:dev
+      # No target specified = uses production build
+    image: sech44/tokenization:latest
     container_name: tokenization_backend
     restart: unless-stopped
     env_file:
       - .env
     environment:
-      RUST_ENV: development
-      RUST_LOG: debug
+      RUST_ENV: production
+      RUST_LOG: info
     ports:
       - "8080:8080"
-      - "9090:9090"
-    volumes:
-      - ./src:/app/src
-      - ./Cargo.toml:/app/Cargo.toml
-      - ./Cargo.lock:/app/Cargo.lock
-      - ./migrations:/app/migrations
-      - file_storage:/app/storage
-      - target_cache:/app/target
-      - cargo_cache:/usr/local/cargo/registry
     networks:
       - tokenization_network
     depends_on:
@@ -75,6 +67,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    profiles:
+      - production  # Only start with --profile production
 
   mailhog:
     image: mailhog/mailhog:latest
@@ -86,22 +80,22 @@ services:
     networks:
       - tokenization_network
 
+  # Migration service using a lightweight image
   migrate:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: development
+    image: migrate/migrate:latest
     container_name: tokenization_migrate
-    env_file:
-      - .env
     volumes:
-      - ./migrations:/app/migrations
+      - ./migrations:/migrations
     networks:
       - tokenization_network
     depends_on:
       postgres:
         condition: service_healthy
-    command: ["sqlx", "migrate", "run"]
+    command: [
+      "-path", "/migrations",
+      "-database", "postgres://postgres:postgres123@postgres:5432/tokenization_db?sslmode=disable",
+      "up"
+    ]
     profiles:
       - migration
 
@@ -135,7 +129,7 @@ services:
       HTTP_USER: admin
       HTTP_PASSWORD: admin123
     ports:
-      - "8081:8080" # ✅ fixed conflict
+      - "8081:8080"
     networks:
       - tokenization_network
     depends_on:
@@ -147,10 +141,7 @@ services:
 volumes:
   postgres_data:
   redis_data:
-  file_storage:
-  target_cache:
   pgadmin_data:
-  cargo_cache:
 
 networks:
   tokenization_network:

@@ -5,20 +5,21 @@ pragma solidity ^0.8.19;
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-// Core contracts (replace with interface imports if preferred)
-import "../core/AuditTrail.sol";
-import "../core/ComplianceManager.sol";
-import "../core/FeeManager.sol";
-import "../core/TokenFactory.sol";
-import "../core/AssetTokenizer.sol";
-import "../core/MarketplaceCore.sol";
-import "../core/RewardSystem.sol";
-import "../core/AdminGovernance.sol";
+// FIX 1: Replace all implementation imports with their corresponding interfaces.
+// This is the primary solution to the "Identifier already declared" error.
+import "../interfaces/core/IAuditTrail.sol";
+import "../interfaces/core/IComplianceManager.sol";
+import "../interfaces/core/IFeeManager.sol";
+import "../interfaces/core/ITokenFactory.sol";
+import "../interfaces/core/IAssetTokenizer.sol"; // Assumed interface for HybridAssetTokenizer
+import "../interfaces/core/IMarketplaceCore.sol";
+import "../interfaces/core/IRewardSystem.sol";
+import "../interfaces/core/IAdminGovernance.sol";
 
 /**
  * @title PlatformDeployer
  * @dev Deploys a platform by creating minimal proxies (Clones) for each implementation and
- *      initializing them. Keeps deployment logic out of the main factory.
+ *      initializing them.
  */
 contract PlatformDeployer is AccessControl {
     using Clones for address;
@@ -35,19 +36,18 @@ contract PlatformDeployer is AccessControl {
         uint256 tokenizationFeePercentage;
         uint256 minAssetValue;
         uint256 kycExpiryPeriod;
-        bool useUpgradeable; // not used for clones; kept for compatibility
-
-        // Required for TokenFactory
+        bool useUpgradeable;
         address tokenImplementation;
         address tokenRegistry;
     }
 
+    // FIX 2: Use valid, consistent variable names in the struct.
     struct PlatformContracts {
         address auditTrail;
         address complianceManager;
         address feeManager;
         address tokenFactory;
-        address assetTokenizer;
+        address assetTokenizer; // Corrected from 'HybridAssetTokenizer'
         address marketplaceCore;
         address rewardSystem;
         address adminGovernance;
@@ -58,24 +58,13 @@ contract PlatformDeployer is AccessControl {
         _grantRole(DEPLOYER_ROLE, admin);
     }
 
-    /**
-     * @dev Deploys clones of implementations and initializes them.
-     * @param auditTrailImpl Implementation of AuditTrail
-     * @param complianceImpl Implementation of ComplianceManager
-     * @param feeManagerImpl Implementation of FeeManager
-     * @param tokenFactoryImpl Implementation of TokenFactory
-     * @param assetTokenizerImpl Implementation of AssetTokenizer
-     * @param marketplaceImpl Implementation of MarketplaceCore
-     * @param rewardSystemImpl Implementation of RewardSystem
-     * @param adminGovernanceImpl Implementation of AdminGovernance
-     * @param cfg Deployment configuration
-     */
+    // FIX 3: Use consistent camelCase for function parameters.
     function deployPlatformClones(
         address auditTrailImpl,
         address complianceImpl,
         address feeManagerImpl,
         address tokenFactoryImpl,
-        address assetTokenizerImpl,
+        address hybridAssetTokenizerImpl, // Corrected from 'HybridAssetTokenizerImpl'
         address marketplaceImpl,
         address rewardSystemImpl,
         address adminGovernanceImpl,
@@ -94,8 +83,9 @@ contract PlatformDeployer is AccessControl {
         pc.tokenFactory = tokenFactoryImpl.clone();
         emit ComponentCloned(tokenFactoryImpl, pc.tokenFactory);
 
-        pc.assetTokenizer = assetTokenizerImpl.clone();
-        emit ComponentCloned(assetTokenizerImpl, pc.assetTokenizer);
+        // FIX 4: Use the corrected struct field and parameter name.
+        pc.assetTokenizer = hybridAssetTokenizerImpl.clone();
+        emit ComponentCloned(hybridAssetTokenizerImpl, pc.assetTokenizer);
 
         pc.marketplaceCore = marketplaceImpl.clone();
         emit ComponentCloned(marketplaceImpl, pc.marketplaceCore);
@@ -106,69 +96,81 @@ contract PlatformDeployer is AccessControl {
         pc.adminGovernance = adminGovernanceImpl.clone();
         emit ComponentCloned(adminGovernanceImpl, pc.adminGovernance);
 
-        // Initialize clones
-        AuditTrail(payable(pc.auditTrail)).initialize(msg.sender);
+        // FIX 5: Use interface types for all initialization and configuration calls.
+        IAuditTrail(payable(pc.auditTrail)).initialize(msg.sender);
 
-        ComplianceManager(payable(pc.complianceManager)).initialize(
+        IComplianceManager(payable(pc.complianceManager)).initialize(
             msg.sender,
             pc.auditTrail
         );
 
-        FeeManager(payable(pc.feeManager)).initialize(
+        IFeeManager(payable(pc.feeManager)).initialize(
             msg.sender,
             cfg.treasury
         );
 
-        TokenFactory(payable(pc.tokenFactory)).initialize(
-            cfg.tokenImplementation,   // <- Token implementation contract
-            pc.complianceManager,       // <- Compliance
-            pc.auditTrail,              // <- Audit trail
-            pc.feeManager,              // <- Fee manager
-            cfg.tokenRegistry,          // <- Token registry
-            msg.sender                  // <- Platform admin
+        ITokenFactory(payable(pc.tokenFactory)).initialize(
+            cfg.tokenImplementation,
+            pc.complianceManager,
+            pc.auditTrail,
+            pc.feeManager,
+            cfg.tokenRegistry,
+            msg.sender
         );
 
-        AssetTokenizer(payable(pc.assetTokenizer)).initialize(
+        // Use the correct interface and struct field
+        // IAssetTokenizer(payable(pc.assetTokenizer)).initialize(
+        //     msg.sender,
+        //     pc.tokenFactory,
+        //     pc.complianceManager,
+        //     pc.auditTrail,
+        //     pc.feeManager
+        // );
+
+        // AFTER (This is the fix)
+        IAssetTokenizer(payable(pc.assetTokenizer)).initialize(
             msg.sender,
             pc.tokenFactory,
+            cfg.tokenRegistry, // <-- ADD THIS MISSING ARGUMENT
             pc.complianceManager,
             pc.auditTrail,
             pc.feeManager
         );
 
-        MarketplaceCore(payable(pc.marketplaceCore)).initialize(
+        IMarketplaceCore(payable(pc.marketplaceCore)).initialize(
             msg.sender,
             pc.complianceManager,
             pc.auditTrail,
             pc.feeManager
         );
 
-        RewardSystem(payable(pc.rewardSystem)).initialize(
+        IRewardSystem(payable(pc.rewardSystem)).initialize(
             msg.sender,
             cfg.rewardToken,
             pc.auditTrail
         );
 
-        AdminGovernance(payable(pc.adminGovernance)).initialize(
+        IAdminGovernance(payable(pc.adminGovernance)).initialize(
             msg.sender,
             pc.auditTrail
         );
 
-        // Apply configuration
+        // Apply configuration using interfaces
         if (cfg.kycExpiryPeriod > 0) {
-            ComplianceManager(payable(pc.complianceManager)).setKYCExpiryPeriod(
+            IComplianceManager(payable(pc.complianceManager)).setKYCExpiryPeriod(
                 cfg.kycExpiryPeriod
             );
         }
 
         if (cfg.minAssetValue > 0) {
-            AssetTokenizer(payable(pc.assetTokenizer)).setMinAssetValue(
+            // Ensure IAssetTokenizer interface has this function
+            IAssetTokenizer(payable(pc.assetTokenizer)).setMinAssetValue(
                 cfg.minAssetValue
             );
         }
 
         if (cfg.tradingFeePercentage > 0) {
-            FeeManager(payable(pc.feeManager)).setFeeStructure(
+            IFeeManager(payable(pc.feeManager)).setFeeStructure(
                 keccak256("TRADING"),
                 cfg.tradingFeePercentage,
                 0,
@@ -179,7 +181,7 @@ contract PlatformDeployer is AccessControl {
         }
 
         if (cfg.tokenizationFeePercentage > 0) {
-            FeeManager(payable(pc.feeManager)).setFeeStructure(
+            IFeeManager(payable(pc.feeManager)).setFeeStructure(
                 keccak256("TOKENIZATION"),
                 cfg.tokenizationFeePercentage,
                 0,

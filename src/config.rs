@@ -106,10 +106,10 @@ pub struct SecurityConfig {
 
 impl Config {
     pub fn from_env() -> Result<Self, ConfigError> {
+        // Load .env file once at the beginning
         dotenv::dotenv().ok();
-
-
-        // Try env-specific file if RUST_ENV is set
+        
+        // Try environment-specific file
         if let Ok(env) = std::env::var("RUST_ENV") {
             let filename = format!(".env.{}", env);
             dotenv::from_filename(&filename).ok();
@@ -170,7 +170,7 @@ impl Config {
         };
 
         let blockchain = BlockchainConfig {
-            network: env::var("BLOCKCHAIN_NETWORK").unwrap_or_else(|_| "localhost".to_string()),
+            network: env::var("BLOCKCHAIN_NETWORK").unwrap_or_else(|_| "amoy".to_string()),
             rpc_url: env::var("BLOCKCHAIN_RPC_URL")
                 .map_err(|_| ConfigError::MissingBlockchainRpcUrl)?,
             private_key: env::var("BLOCKCHAIN_PRIVATE_KEY")
@@ -194,11 +194,6 @@ impl Config {
                 .parse()
                 .map_err(|_| ConfigError::InvalidGasPrice)?,
         };
-
-        
-        dotenv::dotenv().ok();
-        println!("Loaded env file, FIREBASE_KEY={:?}", std::env::var("FIREBASE_KEY"));
-
 
         let compliance = ComplianceConfig {
             kyc_provider: env::var("KYC_PROVIDER").unwrap_or_else(|_| "jumio".to_string()),
@@ -239,7 +234,6 @@ impl Config {
             webhook_url: env::var("WEBHOOK_URL").ok(),
         };
 
-
         let security = SecurityConfig {
             bcrypt_cost: env::var("BCRYPT_COST")
                 .unwrap_or_else(|_| "12".to_string())
@@ -277,6 +271,7 @@ impl Config {
             security,
         })
     }
+
 
     pub fn validate(&self) -> Result<(), ConfigError> {
         // Validate JWT secret length
@@ -435,23 +430,7 @@ impl Default for Config {
                 auto_verification: false,
                 verification_timeout_hours: 72,
             },
-            // notification: NotificationConfig {
-            //     email: EmailConfig {
-            //         smtp_host: "smtp.gmail.com".to_string(),
-            //         smtp_port: 587,
-            //         smtp_username: "".to_string(),
-            //         smtp_password: "".to_string(),
-            //         from_address: "noreply@tokenization.com".to_string(),
-            //         from_name: "Tokenization Platform".to_string(),
-            //     },
-            //     push: PushConfig {
-            //         firebase_key: "".to_string(),
-            //         apns_key: "".to_string(),
-            //         apns_key_id: "".to_string(),
-            //         apns_team_id: "".to_string(),
-            //     },
-            //     webhook_url: None,
-            // },
+            
 
             notification: NotificationConfig {
                 email: EmailConfig {

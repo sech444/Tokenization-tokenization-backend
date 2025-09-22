@@ -6,54 +6,47 @@ WORKDIR /app
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
-    pkg-config libssl-dev curl build-essential ca-certificates \
+    pkg-config \
+    libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy manifest files and build deps
-COPY Cargo.toml Cargo.lock ./
-COPY src ./src
-RUN cargo build --release
+# Copy source
+COPY . .
+
+# Build for regular Linux target (no musl complications)
+RUN cargo build --release && \
+    strip target/release/tokenization-backend
 
 # ================================
-# Runtime stage (production)
+# Runtime stage
 # ================================
-FROM debian:bullseye-slim AS runtime
+FROM debian:bookworm-slim
 WORKDIR /app
 
-# Install runtime dependencies
+# Install minimal runtime deps
 RUN apt-get update && apt-get install -y \
-    libssl-dev ca-certificates curl \
-    && rm -rf /var/lib/apt/lists/*
+    ca-certificates \
+    curl \
+    libssl3 \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd -u 1001 -m appuser
 
-# Copy binary from builder
-COPY --from=builder /app/target/release/tokenization-backend /usr/local/bin/app
+# Copy binary and migrations
+COPY --from=builder /app/target/release/tokenization-backend /usr/local/bin/
+COPY --from=builder /app/migrations ./migrations
 
-CMD ["app"]
+# Set ownership
+RUN chown -R appuser:appuser ./migrations
 
-# ================================
-# Development stage (live reload)
-# ================================
-FROM rustlang/rust:nightly-slim AS development
-WORKDIR /app
+USER appuser
 
-# Install dev dependencies
-RUN apt-get update && apt-get install -y \
-    pkg-config libssl-dev curl build-essential ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+# Environment variables
+ENV PORT=8080
+ENV RUST_LOG=info
 
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-8080}/health || exit 1
 
-# Install developer tools
-RUN cargo install cargo-watch && \
-    cargo install sqlx-cli --no-default-features --features postgres
-
-# Copy project files
-COPY Cargo.toml Cargo.lock ./
-COPY src ./src
-COPY migrations ./migrations
-COPY setup-env.sh ./
-
-# Make the setup script executable
-RUN chmod +x setup-env.sh
-
-# Run backend with hot reload
-CMD ["bash", "-c", "source ./setup-env.sh && cargo watch -x run"]
+EXPOSE 8080
+CMD ["tokenization-backend"]

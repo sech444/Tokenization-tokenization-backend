@@ -1313,9 +1313,3 @@ pub async fn get_pending_kyc_with_user_info(pool: &PgPool) -> AppResult<Vec<serd
     Ok(pending_kyc)
 }
 
-// // Version that returns count and records separately
-// pub async fn get_pending_kyc_summary(pool: &PgPool) -> AppResult<(Vec<KycRecord>, usize)> {
-//     let pending_kyc = get_pending_kyc(pool).await?;
-//     let count = pending_kyc.len();
-//     Ok((pending_kyc, count))
-// }

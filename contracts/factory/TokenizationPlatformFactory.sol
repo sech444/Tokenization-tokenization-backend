@@ -84,7 +84,8 @@ contract TokenizationPlatformFactory is AccessControl {
         platformDeployer = deployerAddr;
     }
 
-    function deployPlatform(string calldata name, IPlatformDeployer.DeploymentConfig calldata cfg) external payable onlyRole(DEPLOYER_ROLE) returns (address) {
+    // AFTER
+    function deployPlatform(string calldata /*name*/, IPlatformDeployer.DeploymentConfig calldata cfg) external payable onlyRole(DEPLOYER_ROLE) returns (address) {
         require(msg.value >= deploymentFee, "Insufficient fee");
         require(platformDeployer != address(0), "PlatformDeployer not set");
 

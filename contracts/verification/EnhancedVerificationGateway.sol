@@ -4,6 +4,9 @@ pragma solidity ^0.8.19;
 
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
+// ===== FIX: Import the missing interface =====
+import "../interfaces/external/IChainlinkAssetVerifier.sol";
+
 contract EnhancedVerificationGateway {
     
     struct PropertyData {

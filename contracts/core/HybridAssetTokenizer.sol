@@ -1,3 +1,4 @@
+// contracts/core/HybridAssetTokenizer.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
@@ -8,47 +9,12 @@ import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol
 import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-interface ITokenFactory {
-    function createToken(
-        string memory name,
-        string memory symbol,
-        uint256 totalSupply,
-        uint8 decimals,
-        uint8 tokenType,
-        string memory metadataURI
-    ) external returns (address);
-}
-
-interface ITokenRegistry {
-    function registerToken(
-        address token,
-        string memory name,
-        string memory symbol,
-        uint256 supply,
-        uint8 decimals,
-        uint8 tokenType,
-        address creator,
-        string memory metadataURI
-    ) external;
-}
-
-interface IComplianceManager {
-    function isKYCVerified(address user) external view returns (bool);
-}
-
-interface IAuditTrail {
-    function logTransaction(
-        bytes32 txType,
-        address user,
-        uint256 amount,
-        bytes calldata data
-    ) external;
-}
-
-interface IFeeManager {
-    function calculateFees(uint256 amount, bytes32 feeType) external view returns (uint256);
-    function collectFees(bytes32 feeType, address payer) external payable returns (uint256);
-}
+import "../interfaces/core/ITokenFactory.sol";
+import "../interfaces/core/ITokenRegistry.sol"; // ===== THIS IS THE FIX =====
+import "../interfaces/core/IComplianceManager.sol";
+import "../interfaces/core/IAuditTrail.sol";
+import "../interfaces/core/IFeeManager.sol";
+import "../interfaces/core/IAssetTokenizer.sol";
 
 contract HybridAssetTokenizer is
     Initializable,
@@ -56,7 +22,8 @@ contract HybridAssetTokenizer is
     AccessControlUpgradeable,
     PausableUpgradeable,
     ReentrancyGuardUpgradeable,
-    UUPSUpgradeable
+    UUPSUpgradeable,
+    IAssetTokenizer
 {
     /*//////////////////////////////////////////////////////////////
                             ACCESS ROLES
@@ -66,27 +33,8 @@ contract HybridAssetTokenizer is
     bytes32 public constant ASSET_ADMIN_ROLE = keccak256("ASSET_ADMIN_ROLE");
 
     /*//////////////////////////////////////////////////////////////
-                            ENUMS & STRUCTS
+                            STRUCTS
     //////////////////////////////////////////////////////////////*/
-    enum AssetType {
-        REAL_ESTATE,
-        BUSINESS,
-        COMMODITY,
-        INTELLECTUAL_PROPERTY,
-        ARTWORK,
-        VEHICLE,
-        OTHER
-    }
-
-    enum AssetStatus {
-        PENDING,
-        UNDER_REVIEW,
-        VERIFIED,
-        TOKENIZED,
-        SUSPENDED,
-        REJECTED
-    }
-
     struct Asset {
         uint256 assetId;
         string name;
@@ -123,16 +71,13 @@ contract HybridAssetTokenizer is
     IAuditTrail public auditTrail;
     IFeeManager public feeManager;
 
-    // Only VerificationGateway can create hybrid assets
     address public verificationGateway;
 
     /*//////////////////////////////////////////////////////////////
                             STORAGE
     //////////////////////////////////////////////////////////////*/
-    mapping(uint256 => address) public deedToToken; // assetId -> fractional ERC20
-    mapping(uint256 => string) private _deedURIs;   // ERC721 metadata storage
-    
-    // Merged from AssetTokenizer
+    mapping(uint256 => address) public deedToToken;
+    mapping(uint256 => string) private _deedURIs;
     mapping(uint256 => Asset) public assets;
     mapping(uint256 => Valuation[]) public assetValuations;
     mapping(address => uint256[]) public ownerAssets;
@@ -171,7 +116,6 @@ contract HybridAssetTokenizer is
     /*//////////////////////////////////////////////////////////////
                                 INIT
     //////////////////////////////////////////////////////////////*/
-    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
@@ -210,7 +154,7 @@ contract HybridAssetTokenizer is
     }
 
     /*//////////////////////////////////////////////////////////////
-                            ASSET REGISTRATION
+                        INTERFACE IMPLEMENTATION
     //////////////////////////////////////////////////////////////*/
     function registerAsset(
         string calldata name,
@@ -218,13 +162,12 @@ contract HybridAssetTokenizer is
         AssetType assetType,
         string[] calldata documentHashes,
         string calldata location
-    ) external whenNotPaused returns (uint256) {
+    ) external override whenNotPaused returns (uint256) {
         require(complianceManager.isKYCVerified(msg.sender), "KYC required");
         require(bytes(name).length > 0 && bytes(name).length <= 100, "Invalid name");
         require(bytes(description).length > 0 && bytes(description).length <= 500, "Invalid description");
         require(documentHashes.length > 0 && documentHashes.length <= 10, "Invalid documents");
 
-        // Verify unique document hashes
         for (uint256 i = 0; i < documentHashes.length; i++) {
             require(!usedDocumentHashes[documentHashes[i]], "Document already used");
             usedDocumentHashes[documentHashes[i]] = true;
@@ -259,8 +202,25 @@ contract HybridAssetTokenizer is
         return assetId;
     }
 
+    function getAsset(uint256 assetId) external view override returns (
+        uint256, string memory, string memory, AssetType, AssetStatus, uint256, uint256, address, address, string[] memory, string memory, uint256, uint256, string memory
+    ) {
+        Asset storage a = assets[assetId];
+        return (
+            a.assetId, a.name, a.description, a.assetType, a.status, a.totalValue, a.totalTokens, a.tokenAddress, a.owner, a.documentHashes, a.location, a.createdAt, a.tokenizedAt, a.rejectionReason
+        );
+    }
+
+    function canTokenizeAsset(uint256 assetId) external view override returns (bool, string memory) {
+        Asset storage asset = assets[assetId];
+        if (asset.assetId == 0) return (false, "Asset not found");
+        if (asset.status != AssetStatus.VERIFIED) return (false, "Asset not verified");
+        if (asset.tokenAddress != address(0)) return (false, "Asset already tokenized");
+        return (true, "Asset is ready for tokenization");
+    }
+
     /*//////////////////////////////////////////////////////////////
-                            VALUATIONS
+                            OTHER FUNCTIONS
     //////////////////////////////////////////////////////////////*/
     function addValuation(
         uint256 assetId,
@@ -303,9 +263,6 @@ contract HybridAssetTokenizer is
         return _getAverageValuation(assetId);
     }
 
-    /*//////////////////////////////////////////////////////////////
-                            ASSET VERIFICATION
-    //////////////////////////////////////////////////////////////*/
     function verifyAsset(uint256 assetId) external onlyRole(ASSET_ADMIN_ROLE) {
         Asset storage asset = assets[assetId];
         require(asset.status == AssetStatus.UNDER_REVIEW, "Not under review");
@@ -319,16 +276,13 @@ contract HybridAssetTokenizer is
         emit AssetVerified(assetId);
     }
 
-    /*//////////////////////////////////////////////////////////////
-                        HYBRID ASSET CREATION
-    //////////////////////////////////////////////////////////////*/
     function createHybridAsset(
         uint256 assetId,
         string memory name,
         string memory symbol,
         uint256 supply,
         uint8 decimals,
-        uint8 tokenType,
+        ITokenRegistry.TokenType tokenType,
         string memory metadataURI,
         string memory deedURI
     ) external onlyGateway whenNotPaused nonReentrant returns (address tokenAddress) {
@@ -338,13 +292,11 @@ contract HybridAssetTokenizer is
         require(asset.status == AssetStatus.VERIFIED, "Asset not verified");
         require(asset.tokenAddress == address(0), "Already tokenized");
 
-        // Collect tokenization fee
         uint256 fee = feeManager.calculateFees(asset.totalValue, keccak256("TOKENIZATION"));
         if (fee > 0) {
             feeManager.collectFees{value: fee}(keccak256("TOKENIZATION"), asset.owner);
         }
 
-        // 1. Deploy ERC20 fractional token
         tokenAddress = tokenFactory.createToken(
             name,
             symbol,
@@ -354,7 +306,6 @@ contract HybridAssetTokenizer is
             metadataURI
         );
 
-        // 2. Register in registry
         tokenRegistry.registerToken(
             tokenAddress,
             name,
@@ -366,11 +317,9 @@ contract HybridAssetTokenizer is
             metadataURI
         );
 
-        // 3. Mint deed NFT for the property
         _mint(asset.owner, assetId);
         _deedURIs[assetId] = deedURI;
 
-        // 4. Update asset status
         asset.tokenAddress = tokenAddress;
         asset.totalTokens = supply;
         asset.status = AssetStatus.TOKENIZED;
@@ -381,9 +330,6 @@ contract HybridAssetTokenizer is
         emit HybridAssetCreated(assetId, tokenAddress, supply);
     }
 
-    /*//////////////////////////////////////////////////////////////
-                            ADMIN FUNCTIONS
-    //////////////////////////////////////////////////////////////*/
     function setVerificationGateway(address gateway) external onlyRole(PLATFORM_ADMIN_ROLE) {
         require(gateway != address(0), "Invalid gateway");
         verificationGateway = gateway;
@@ -411,9 +357,6 @@ contract HybridAssetTokenizer is
         minValuations = newMin;
     }
 
-    /*//////////////////////////////////////////////////////////////
-                            VIEW FUNCTIONS
-    //////////////////////////////////////////////////////////////*/
     function _getValidValuationsCount(uint256 assetId) internal view returns (uint256) {
         Valuation[] storage valuations = assetValuations[assetId];
         uint256 validCount = 0;
@@ -450,9 +393,6 @@ contract HybridAssetTokenizer is
         return assetValuations[assetId];
     }
 
-    /*//////////////////////////////////////////////////////////////
-                            ERC721 OVERRIDES
-    //////////////////////////////////////////////////////////////*/
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(_ownerOf(tokenId) != address(0), "Nonexistent token");
         return _deedURIs[tokenId];
@@ -467,9 +407,6 @@ contract HybridAssetTokenizer is
         return super.supportsInterface(interfaceId);
     }
 
-    /*//////////////////////////////////////////////////////////////
-                        UPGRADEABILITY & SAFETY
-    //////////////////////////////////////////////////////////////*/
     function _authorizeUpgrade(address newImplementation)
         internal
         override

@@ -4,11 +4,16 @@ pragma solidity ^0.8.19;
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract TokenRegistry is Initializable, AccessControlUpgradeable {
+// ===== FIX: Import the interface which now contains the TokenType enum =====
+import "../interfaces/core/ITokenRegistry.sol";
+
+// ===== FIX: Explicitly implement the ITokenRegistry interface =====
+contract TokenRegistry is Initializable, AccessControlUpgradeable, ITokenRegistry {
     bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
     bytes32 public constant SYSTEM_ROLE = keccak256("SYSTEM_ROLE");
 
-    enum TokenType { ASSET, UTILITY, SECURITY, GOVERNANCE }
+    // ===== FIX: REMOVE the inline enum definition =====
+    // enum TokenType { ASSET, UTILITY, SECURITY, GOVERNANCE }
 
     struct TokenInfo {
         address tokenAddress;
@@ -41,12 +46,14 @@ contract TokenRegistry is Initializable, AccessControlUpgradeable {
     event TokenStatsUpdated(address indexed tokenAddress, uint256 totalTransfers, uint256 totalVolume);
 
     /// @notice Upgradeable initializer instead of constructor
-    function initialize(address admin) public initializer {
+    // ===== FIX: Add 'override' keyword =====
+    function initialize(address admin) public override initializer {
         __AccessControl_init();
         _grantRole(DEFAULT_ADMIN_ROLE, admin);
         _grantRole(SYSTEM_ROLE, admin);
     }
 
+    // ===== FIX: Add 'override' keyword =====
     function registerToken(
         address tokenAddress,
         string calldata name,
@@ -56,7 +63,7 @@ contract TokenRegistry is Initializable, AccessControlUpgradeable {
         TokenType tokenType,
         address creator,
         string calldata metadataURI
-    ) external onlyRole(FACTORY_ROLE) {
+    ) external override onlyRole(FACTORY_ROLE) {
         require(tokenAddress != address(0), "invalid token");
         require(tokens[tokenAddress].tokenAddress == address(0), "already registered");
 

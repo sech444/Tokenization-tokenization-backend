@@ -1,13 +1,21 @@
-// ============================================================================
-
 // contracts/interfaces/core/IMarketplaceCore.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 interface IMarketplaceCore {
+    // --- Enums ---
     enum OrderType { BUY, SELL }
     enum OrderStatus { ACTIVE, COMPLETED, CANCELLED, EXPIRED, PARTIALLY_FILLED }
     
+    // ===== THIS IS THE FIX: Add the missing initialize function =====
+    function initialize(
+        address admin,
+        address complianceManager,
+        address auditTrail,
+        address feeManager
+    ) external;
+
+    // --- Other Functions ---
     function createSellOrder(
         address tokenAddress,
         uint256 amount,

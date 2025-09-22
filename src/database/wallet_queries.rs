@@ -237,14 +237,14 @@ pub async fn unlink_wallet_from_user(
     Ok(())
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    // Add your test database connection setup here
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+//     // Add your test database connection setup here
     
-    #[tokio::test]
-    async fn test_wallet_user_creation() {
-        // This would require a test database setup
-        // You can implement this based on your existing test patterns
-    }
-}
+//     #[tokio::test]
+//     async fn test_wallet_user_creation() {
+//         // This would require a test database setup
+//         // You can implement this based on your existing test patterns
+//     }
+// }

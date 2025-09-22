@@ -572,7 +572,7 @@ contract MarketplaceCore is
     function _insertSorted(
         uint256[] storage orderArray,
         uint256 orderId,
-        uint256 price,
+        uint256 /*price*/,
         bool descending
     ) internal {
         orderArray.push(orderId);

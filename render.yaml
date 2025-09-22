@@ -1,0 +1,96 @@
+services:
+  - type: web
+    name: tokenization-backend
+    runtime: docker
+    image:
+      url: docker.io/sech44/tokenization:latest
+    region: oregon
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      # Your environment variables
+      # Database
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tokenization-db
+          property: connectionString
+      
+      # Security
+      - key: JWT_SECRET
+        generateValue: true
+      
+      # Blockchain Configuration
+      - key: BLOCKCHAIN_RPC_URL
+        value: https://polygon-amoy.g.alchemy.com/v2/JiMaxR6ljFiTZuXrGnZcV
+      - key: BLOCKCHAIN_PRIVATE_KEY
+        sync: false
+      - key: BLOCKCHAIN_NETWORK
+        value: amoy
+      - key: BLOCKCHAIN_GAS_LIMIT
+        value: "3000000"
+      - key: BLOCKCHAIN_GAS_PRICE
+        value: "20000000000"
+      
+      # Contract Proxy Addresses (Required by your app)
+      - key: PROXY_ADMIN_ADDRESS
+        value: "0x8DE132048fC2C2089C97e741245A28B408D9547f"
+      - key: AUDIT_TRAIL_PROXY_ADDRESS
+        value: "0xD5E552932d4359f55FB60F288B13E04277232079"
+      - key: COMPLIANCE_MANAGER_PROXY_ADDRESS
+        value: "0x81470812F4580062a3Ea96EF79f2A0eb8F5EdD5A"
+      - key: FEE_MANAGER_PROXY_ADDRESS
+        value: "0xa337AD0e025af8de239C6bb396948fE65848feae"
+      - key: ADMIN_GOVERNANCE_PROXY_ADDRESS
+        value: "0x97fa93CCC37f1aBCF77119EEEf870db29BBA7ECE"
+      - key: HYBRID_ASSET_TOKENIZER_PROXY_ADDRESS
+        value: "0xD5A62D8F8C86b7205b0acECa8040F32a18181fA1"
+      - key: TOKEN_FACTORY_PROXY_ADDRESS
+        value: "0x1b2B4a2F16D6346848D2Fa429B9521E2550393ef"
+      - key: TOKEN_REGISTRY_PROXY_ADDRESS
+        value: "0xFE32aD2B3c1BCcB9771D3a3AF49108f5877AbC25"
+      - key: MARKETPLACE_CORE_PROXY_ADDRESS
+        value: "0x332bE9AD7fA3092397D1B59B94c0CaA0Ea672968"
+      - key: VERIFICATION_GATEWAY_ADDRESS
+        value: "0xabEB1899D0AAFafCC91F3ACDEFb5dB931293837A"
+      - key: ASSET_TOKEN_IMPL_ADDRESS
+        value: "0xC43212Efb3e3C54E8BEB502daC848E623d99Ef73"
+      
+      # Legacy contract addresses (for backwards compatibility)
+      - key: CONTRACT_TOKEN_FACTORY
+        value: "0x1b2B4a2F16D6346848D2Fa429B9521E2550393ef"
+      - key: CONTRACT_MARKETPLACE
+        value: "0x332bE9AD7fA3092397D1B59B94c0CaA0Ea672968"
+      - key: CONTRACT_COMPLIANCE
+        value: "0x81470812F4580062a3Ea96EF79f2A0eb8F5EdD5A"
+      
+      # Database Configuration
+      - key: DB_MAX_CONNECTIONS
+        value: "20"
+      - key: DB_MIN_CONNECTIONS
+        value: "5"
+      - key: DB_ACQUIRE_TIMEOUT
+        value: "30"
+      - key: DB_IDLE_TIMEOUT
+        value: "600"
+      
+      # Server Configuration
+      - key: SERVER_HOST
+        value: "0.0.0.0"
+      - key: SERVER_PORT
+        value: "8080"
+      - key: CORS_ORIGINS
+        value: "*"
+      
+      # Logging
+      - key: RUST_LOG
+        value: info,tokenization_platform=debug
+      - key: ENVIRONMENT
+        value: production
+
+databases:
+  - name: tokenization-db
+    plan: free
+    databaseName: tokenization_db
+    user: tokenization_user
+    region: oregon
+    ipAllowList: []  # Allow connections from Render services

@@ -1,1 +1,46 @@
-node_modules
+# Dependencies
+node_modules/
+npm-debug.log*
+
+# Production builds
+build/
+dist/
+
+# Environment variables
+.env
+.env.dev
+.env.development
+.env.local
+.env.backup
+.env.staging
+.env.template
+.env.production
+
+# Cache directories
+.cache/
+.parcel-cache/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+
+.dockerignore
+.git
+.gitignore
+README.md
+.env
+.env.*
+docker-compose*.yml
+*.log
+tmp/
+temp/
+dist/
+node_modules/
+.cargo/registry
+.cargo/git
