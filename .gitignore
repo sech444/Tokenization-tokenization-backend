@@ -1,6 +1,7 @@
 # Rust
 target/
 Cargo.lock  # Optional: Exclude if regenerating; include for reproducibility
+node_modules/
 
 # Environment and secrets
 .env
