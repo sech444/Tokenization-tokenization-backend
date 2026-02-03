@@ -37,7 +37,7 @@ ethers = "2.0"
 web3 = "0.19"
 
 # Authentication & Security
-jsonwebtoken = "9.0"
+jsonwebtoken = "10.3"
 bcrypt = "0.15"
 argon2 = "0.5"
 
