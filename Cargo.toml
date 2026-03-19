@@ -1,0 +1,76 @@
+[package]
+name = "tokenization-platform"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "tokenization-backend"
+path = "src/main.rs"
+
+[dependencies]
+# Web framework
+async-trait = "0.1"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.0", features = ["v4", "serde"] }
+#rust_decimal = { version = "1.32", features = ["serde-float"] }
+hex = "0.4"
+axum = { version = "0.7", features = ["multipart"] }
+axum-extra = { version = "0.9", features = ["typed-header"] }
+log = "0.4"
+env_logger = "0.10"  
+rust_decimal = { version = "1", features = ["db-postgres"] }
+
+
+
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono", "rust_decimal", "macros", "json"] }
+
+
+
+# Blockchain
+ethers = "2.0"
+web3 = "0.19"
+
+# Authentication & Security
+jsonwebtoken = "9.0"
+bcrypt = "0.15"
+argon2 = "0.5"
+
+# Configuration
+config = "0.14"
+dotenv = "0.15"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Validation
+validator = { version = "0.16", features = ["derive"] }
+
+# HTTP client
+reqwest = { version = "0.11", features = ["json"] }
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+sha2 = "0.10.9"
+erased-serde = "0.4.6"
+lettre = "0.11.18"
+
+# Crypto
+sha3 = "0.10"
+rand = "0.8"
+k256 = "0.13.4"
+eyre = "0.6.12"
+
+[lib]
+name = "tokenization_platform"
+path = "src/lib.rs"

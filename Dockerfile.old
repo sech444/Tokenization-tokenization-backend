@@ -1,0 +1,54 @@
+# ================================
+# Builder stage
+# ================================
+FROM rust:1.80-slim-bullseye AS builder
+WORKDIR /app
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    pkg-config libssl-dev curl build-essential ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy manifest files and build deps
+COPY Cargo.toml Cargo.lock ./
+COPY src ./src
+RUN cargo build --release
+
+# ================================
+# Runtime stage (production)
+# ================================
+FROM debian:bullseye-slim AS runtime
+WORKDIR /app
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+    libssl-dev ca-certificates curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy binary from builder
+COPY --from=builder /app/target/release/tokenization-backend /usr/local/bin/app
+
+CMD ["app"]
+
+# ================================
+# Development stage (live reload)
+# ================================
+FROM rustlang/rust:nightly-slim AS development
+WORKDIR /app
+
+# Install dev dependencies
+RUN apt-get update && apt-get install -y \
+    pkg-config libssl-dev curl build-essential ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install developer tools separately (so they can cache)
+RUN cargo install cargo-watch
+RUN cargo install sqlx-cli --no-default-features --features postgres
+
+# Copy project files
+COPY Cargo.toml Cargo.lock ./
+COPY src ./src
+COPY migrations ./migrations
+
+# Run backend with hot reload
+CMD ["cargo", "watch", "-x", "run"]

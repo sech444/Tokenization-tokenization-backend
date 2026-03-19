@@ -1,0 +1,151 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: tokenization_postgres
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: tokenization_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    networks:
+      - tokenization_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tokenization_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  redis:
+    image: redis:7-alpine
+    container_name: tokenization_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass redis123
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - tokenization_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Optional: Keep this for testing the production Docker image locally
+  tokenization_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # No target specified = uses production build
+    image: sech44/tokenization:latest
+    container_name: tokenization_backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      RUST_ENV: production
+      RUST_LOG: info
+    ports:
+      - "8080:8080"
+    networks:
+      - tokenization_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    profiles:
+      - production  # Only start with --profile production
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: tokenization_mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - tokenization_network
+
+  # Migration service using a lightweight image
+  migrate:
+    image: migrate/migrate:latest
+    container_name: tokenization_migrate
+    volumes:
+      - ./migrations:/migrations
+    networks:
+      - tokenization_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: [
+      "-path", "/migrations",
+      "-database", "postgres://postgres:postgres123@postgres:5432/tokenization_db?sslmode=disable",
+      "up"
+    ]
+    profiles:
+      - migration
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: tokenization_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@tokenization.local
+      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - tokenization_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - admin
+
+  redis_commander:
+    image: rediscommander/redis-commander:latest
+    container_name: tokenization_redis_commander
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:redis:6379:0:redis123
+      HTTP_USER: admin
+      HTTP_PASSWORD: admin123
+    ports:
+      - "8081:8080"
+    networks:
+      - tokenization_network
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles:
+      - admin
+
+volumes:
+  postgres_data:
+  redis_data:
+  pgadmin_data:
+
+networks:
+  tokenization_network:
+    driver: bridge

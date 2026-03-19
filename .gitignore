@@ -1,0 +1,77 @@
+# Rust
+target/
+Cargo.lock  # Optional: Exclude if regenerating; include for reproducibility
+node_modules/
+
+# Environment and secrets
+.env
+.env.*
+.env.local
+.env.backup
+.env.staging
+.env.template
+.env.production
+.env.development
+
+# Logs and temp
+*.log
+logs/
+tmp/
+temp/
+.cache/
+.cargo/
+
+# OS and editor
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+*~
+
+# Documentation/tests (optional)
+docs/
+examples/
+tests/
+benches/
+
+# Docker (if not needed in repo)
+Dockerfile  # Optional: Include it!
+.dockerignore
+docker-compose.yml  # Include for local testing
+setup-env.sh  # Include for dev
+
+# Git
+.git
+.github  # Optional workflowsnode_modules/
+.env*
+
+# Additional patterns
+*.log
+logs/
+.cache/
+.mode/
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Additional patterns
+*.log
+logs/
+.cache/
+.mode/
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

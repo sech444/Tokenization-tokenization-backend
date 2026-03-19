@@ -1,0 +1,29 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE tokens\n            SET circulating_supply = GREATEST(COALESCE(circulating_supply, 0) - $1, 0),\n                updated_at = NOW()\n            WHERE id = $2 \n              AND is_active = true\n              AND COALESCE(circulating_supply, 0) >= $1\n            RETURNING total_supply, circulating_supply\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "total_supply",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 1,
+        "name": "circulating_supply",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      true
+    ]
+  },
+  "hash": "6bf9d102ce52bb377e3c111ff7756757b358222582ebecd39649f2e8943d4e87"
+}
