@@ -8,21 +8,22 @@ services:
     plan: free
     healthCheckPath: /health
     envVars:
-      # Your environment variables
       # Database
       - key: DATABASE_URL
         fromDatabase:
           name: tokenization-db
           property: connectionString
-      
+
       # Security
       - key: JWT_SECRET
         generateValue: true
-      
+
       # Blockchain Configuration
       - key: BLOCKCHAIN_RPC_URL
         value: https://polygon-amoy.g.alchemy.com/v2/JiMaxR6ljFiTZuXrGnZcV
       - key: BLOCKCHAIN_PRIVATE_KEY
+        sync: false
+      - key: DEPLOYER_PRIVATE_KEY
         sync: false
       - key: BLOCKCHAIN_NETWORK
         value: amoy
@@ -30,8 +31,8 @@ services:
         value: "3000000"
       - key: BLOCKCHAIN_GAS_PRICE
         value: "20000000000"
-      
-      # Contract Proxy Addresses (Required by your app)
+
+      # Proxy Contract Addresses
       - key: PROXY_ADMIN_ADDRESS
         value: "0x8DE132048fC2C2089C97e741245A28B408D9547f"
       - key: AUDIT_TRAIL_PROXY_ADDRESS
@@ -54,16 +55,30 @@ services:
         value: "0xabEB1899D0AAFafCC91F3ACDEFb5dB931293837A"
       - key: ASSET_TOKEN_IMPL_ADDRESS
         value: "0xC43212Efb3e3C54E8BEB502daC848E623d99Ef73"
-      
-      # Legacy contract addresses (for backwards compatibility)
+
+      # Legacy / alternate contract keys
+      - key: CONTRACT_PROXY_ADMIN
+        value: "0x0dcd1bf9a1b36ce34237eeafef220932846bcd82"
+      - key: CONTRACT_TOKEN_REGISTRY
+        value: "0x9a676e781a523b5d0c0e43731313a708cb607508"
+      - key: CONTRACT_COMPLIANCE
+        value: "0x81470812F4580062a3Ea96EF79f2A0eb8F5EdD5A"
+      - key: CONTRACT_FEE_MANAGER
+        value: "0x959922be3caee4b8cd9a407cc3ac1c251c2007b1"
+      - key: CONTRACT_REWARD_SYSTEM
+        value: "0x9a9f2ccfde556a7e9ff0848998aa4a0cfd8863ae"
+      - key: CONTRACT_ASSET_TOKENIZER
+        value: "0x68b1d87f95878fe05b998f19b66f4baba5de1aed"
       - key: CONTRACT_TOKEN_FACTORY
         value: "0x1b2B4a2F16D6346848D2Fa429B9521E2550393ef"
       - key: CONTRACT_MARKETPLACE
         value: "0x332bE9AD7fA3092397D1B59B94c0CaA0Ea672968"
-      - key: CONTRACT_COMPLIANCE
-        value: "0x81470812F4580062a3Ea96EF79f2A0eb8F5EdD5A"
-      
-      # Database Configuration
+      - key: CONTRACT_PLATFORM_DEPLOYER
+        value: "0xa82ff9afd8f496c3d6ac40e2a0f282e47488cfc9"
+      - key: CONTRACT_PLATFORM_FACTORY
+        value: "0x1613beb3b2c4f22ee086b2b38c1476a3ce7f78e8"
+
+      # Database pool
       - key: DB_MAX_CONNECTIONS
         value: "20"
       - key: DB_MIN_CONNECTIONS
@@ -72,15 +87,15 @@ services:
         value: "30"
       - key: DB_IDLE_TIMEOUT
         value: "600"
-      
-      # Server Configuration
+
+      # Server
       - key: SERVER_HOST
         value: "0.0.0.0"
       - key: SERVER_PORT
         value: "8080"
       - key: CORS_ORIGINS
         value: "*"
-      
+
       # Logging
       - key: RUST_LOG
         value: info,tokenization_platform=debug
@@ -93,4 +108,4 @@ databases:
     databaseName: tokenization_db
     user: tokenization_user
     region: oregon
-    ipAllowList: []  # Allow connections from Render services
+    ipAllowList: []
